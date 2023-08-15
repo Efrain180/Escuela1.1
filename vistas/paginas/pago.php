@@ -245,6 +245,8 @@ echo "<h2>El pago es de " . $pago . "</h2>";
                   },
 
 
+
+                  
                   onCancel: function(data){
                     alert('Pago Cancelado');
                     console.log(data);
