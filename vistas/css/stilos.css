@@ -1,0 +1,11 @@
+.pad-basic1{
+
+    border-collapse:collapse;
+        margin: 15px;
+        padding: 15px;
+
+}
+.pad-basic{
+    border: 1px solid black;
+    text-align: center;
+}
