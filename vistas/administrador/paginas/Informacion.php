@@ -104,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <img src="../../../imagenes/Efrain.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="perfil.php"  class="d-block"><?php  print('ADM. '.$row['nombre'].' '.$row['apellido1']) ?></a>
+            <a href="perfil.php"  class="d-block"><?php  print('MTR. '.$row['nombre'].' '.$row['apellido1']) ?></a>
           </div>
         </div>
 
@@ -126,14 +126,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
             </li>
 
-            <li class="nav-item">
-              <a href="grupos.php" class="nav-link">
-                <i class="nav-icon fas fa-edit"></i>
-                <p>
-                Registrar alumno
-                </p>
-              </a>
-            </li>
             <li class="nav-item">
               <a href="calificacion.php" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>

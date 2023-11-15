@@ -43,12 +43,34 @@
 						<input class="input100" type="text" name="correo" placeholder="Escribe tu correo">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
+					<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("passwordInput");
+        var toggleIcon = document.querySelector(".toggle-password i");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
+</script>
 
 					<div class="wrap-input100 validate-input" data-validate="La contraseña es requerida">
 						<span class="label-input100">Contraseña</span>
-						<input class="input100" type="password" name="pass" placeholder="Escribe tu contraseña">
-						<span class="focus-input100" data-symbol="&#xf190;"></span>
+						<div class="password-toggle">
+                        <input class="input100" type="password" name="pass" id="passwordInput" placeholder="Escribe tu contraseña">
+                        <span class="focus-input100" data-symbol="&#xf190;"></span>
+                        <span class="toggle-password" onclick="togglePasswordVisibility()" style="position: absolute; top: 50%; transform: translateY(-50%); right: 5px; cursor: pointer;"><i class="fa fa-eye"></i></span>
+                        </div>
+
 					</div>
+
+
 					<br>
 					
 					<div class="container-login100-form-btn">

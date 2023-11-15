@@ -3,15 +3,15 @@ session_start();
 
 if(!isset($_SESSION['rol'])){
 
-    header('location: ../../../Login/index.php');
+    header('location: ../../Login/index.php');
     
 }else{
-    if($_SESSION['rol']!=1){
-        header('location: ../../../Login/index.php');
+    if($_SESSION['rol']!=3){
+        header('location: ../../Login/index.php');
     }
 }
 
-require('../../../controladores/conexion.php');
+require('../../controladores/conexion.php');
 
 $sesion = $_SESSION['rol'];
 $sesionna= $_SESSION['nombres'];
@@ -19,7 +19,7 @@ $sesionna= $_SESSION['nombres'];
 $db = new Database;
 
 
-$query =  $db->connect()->prepare('SELECT * FROM maestros WHERE rol = :sesion AND nombre = :sesionna ');
+$query =  $db->connect()->prepare('SELECT * FROM admini WHERE rol = :sesion AND nombre = :sesionna ');
 $query->execute(array(':sesion'=> $sesion, ':sesionna' => $sesionna));
 $row = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -39,9 +39,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -69,12 +69,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li>
           <div class="user-panel mt-1 pb-1 mb-1 d-flex">
             <div class="image">
-              <img src="../../../imagenes/raptor.jpg" class="img-circle elevation-2" alt="User Image">
+              <img src="../../imagenes/raptor.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
           </div>
         </li>
         <li class="nav-item px-3 d-sm-inline-block">
-          <a href="../../../Login/index.php" class="nav-link">Cerrar sesion</a>
+          <a href="../../Login/index.php" class="nav-link">Cerrar sesion</a>
         </li>
       </ul>
 
@@ -92,7 +92,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="http://www.utmirbis.org/" target="_blank" class="brand-link">
-        <img src="../../../imagenes/utmir.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="../../imagenes/utmir.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">UTMIR</span>
       </a>
 
@@ -101,10 +101,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="../../../imagenes/Efrain.jpg" class="img-circle elevation-2" alt="User Image">
+            <img src="../../imagenes/Efrain.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?php  print('MTR. '.$row['nombre'].' '.$row['apellido1']) ?></a>
+            <a href="#" class="d-block"><?php  print('ADM. '.$row['nombre'].' '.$row['apellido1']) ?></a>
           </div>
         </div>
 
@@ -118,7 +118,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
 
             <li class="nav-item">
-              <a href="../admin.php" class="nav-link">
+              <a href="administradores.php" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Menu
@@ -128,13 +128,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
             <li class="nav-item">
-              <a href="calificacion.php" class="nav-link">
-                <i class="nav-icon fas fa-copy"></i>
+              <a href="grupos.php" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
                 <p>
-                  Agregar calificacion
+                Registros
                 </p>
               </a>
             </li>
+            
             <li class="nav-item">
               <a href="Informacion.php" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
@@ -168,7 +169,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="container-fluid">
           <div class="row ">
             <div class="col-md-12">
-              <h1 class="text-center">Perfil del docente</h1>
+              <h1 class="text-center">Perfil de Administrativo</h1>
             </div>
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -181,7 +182,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-12">
             <div class="card card-orange">
               <div class="card-header">
-                <h3 class="card-title">Docente</h3>
+                <h3 class="card-title">Administrador</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -264,11 +265,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- REQUIRED SCRIPTS -->
 
   <!-- jQuery -->
-  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <script src="../plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
-  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="../../dist/js/adminlte.min.js"></script>
+  <script src="../dist/js/adminlte.min.js"></script>
 </body>
 
 </html>
