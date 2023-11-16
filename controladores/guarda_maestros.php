@@ -25,14 +25,14 @@ $query->bindParam(':contrasena',$contrasena);
 if ($query->execute()){
     echo'<script type="text/javascript">
     alert("Registro agregado con exito");
-    window.location.href="../vistas/administradoresreal/grupos.php";
+    window.location.href="../vistas/administradoresreal/registro_maestros.php";
     </script>';
 
 }
 else {
     echo'<script type="text/javascript">
     alert("Error al agregarv el registro");
-    window.location.href="../vistas/administradoresreal/grupos.php";
+    window.location.href="../vistas/administradoresreal/registro_maestros.php";
     </script>';
 };
 

@@ -1,6 +1,6 @@
 <div class="card-body ">
 
-<form id="registro" name="registro" method="POST" action="../../controladores/guarda.php" autocomplete="off" class=" row g-3">
+<form id="registro" name="registro" method="POST" action="../../controladores/guarda_maestros.php" autocomplete="off" class=" row g-3">
 
   <div class="row mb-3">
     <div class="col-md-4 sm-col-12">
@@ -30,19 +30,14 @@
       <input type="email" class="form-control" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required>
 
     </div>
-
-  <div class="col-md-4 sm-col-12">
+    
+    <div class="col-md-4 sm-col-12">
       <label for="correo" class="form-label"> Contraseña</label>
       <input type="text" class="form-control" id="contrasena" name="contrasena" placeholder="tu contraseña" required>
 
     </div>
 
-    <div class="col-md-4 sm-col-12 ">
-      <label for="Fecha de nacimiento" class="form-label"> Fecha de nacimiento</label>
-      <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" placeholder="Tu fecha de nacimiento" required>
-
-    </div>
-
+  
   </div>
 
 

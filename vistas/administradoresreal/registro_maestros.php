@@ -127,7 +127,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="grupos.php" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
                 Registros
@@ -136,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
             <li class="nav-item">
-              <a href="registro_maestros.php" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
                 Registro Maestros
@@ -190,7 +190,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container">
             <div class="card">
             <button type="button" class="btn btn-success" id="mostrarFormulario">
-                    <span class="glyphicon glyphicon-plus"></span> Agregar <i class="fa fa-plus"></i> </a></button>
+                    <span class="glyphicon glyphicon-plus"></span> Agregar maestro <i class="fa fa-plus"></i> </a></button>
             </div>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -205,7 +205,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 </script>
 
-            <?php include "form_alumnos.php"; ?>
+            <?php include "form_maestros.php"; ?>
               </div>
 
               
@@ -218,9 +218,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <th>Nombre</th>
                                 <th>Apellido paterno</th>
                                 <th>Apellido Materno</th>
-                                <th>Nacimiento</th>
                                 <th>Correo</th>
-                                <th>Grupo</th>
 
                             </tr>
                         </thead>
@@ -230,32 +228,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
     require_once("../../controladores/conexion.php");
     $db = new Database;
 
-    $query = $db->connect()->prepare('SELECT l.*, g.nombre AS nombre_grupo, c.cuatrimestre 
-    FROM login1 l 
-    LEFT JOIN grupos g ON l.id_grupo = g.id 
-    LEFT JOIN cuatrimestre c ON g.id_cuatri = c.id');
+    $query = $db->connect()->prepare('SELECT * FROM maestros');
     $query->execute();
     while ($fila = $query->fetch(PDO::FETCH_ASSOC)) :
-      $grupo_cuatri = $fila['nombre_grupo'] . ' - Cuatrimestre ' . $fila['cuatrimestre'];
     ?>
         <tr>
-            <td><?php echo $fila['nombrea']; ?></td>
+            <td><?php echo $fila['nombre']; ?></td>
             <td><?php echo $fila['apellido1']; ?></td>
             <td><?php echo $fila['apellido2']; ?></td>
-            <td><?php echo $fila['fechana']; ?></td>
             <td><?php echo $fila['correo']; ?></td>
-            <td><?php echo $grupo_cuatri; ?></td>
 
 
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editar<?php echo $fila['id']; ?>">
                                             <i class="fa fa-edit "></i>
                                         </button>
-                                        <a href="../../controladores/eliminar_al.php?id=<?php echo $fila['id'] ?>" class="btn btn-danger btn-del" onclick="return confirmarEliminacion();" >
+                                        <a href="../../controladores/eliminar_maestro.php?id=<?php echo $fila['id'] ?>" class="btn btn-danger btn-del" onclick="return confirmarEliminacion();" >
                                             <i class="fa fa-trash "></i></a>
                                     </td>
                                 </tr>
-                                <?php include "editar_alumno.php"; ?>
+                                <?php include "editar_maestros.php"; ?>
                             <?php endwhile; ?>
                         </tbody>
                     </table>
