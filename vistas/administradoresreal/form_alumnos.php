@@ -58,7 +58,7 @@ INNER JOIN cuatrimestre c ON g.id_cuatri = c.id");
 $queryyy->execute(array());
 while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
     echo '
-<option value="'.$rowe['id'].'" >'.$rowe['nombre']. ' catrimestre '.$rowe['cuatrimestre']. '</option>
+<option value="'.$rowe['id'].'" >'.$rowe['nombre']. ' cuatrimestre '.$rowe['cuatrimestre']. '</option>
 
 
 ';

@@ -33,7 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UTMIR | Registros de Maestros </title>
+  <title>UTMIR | Registros de Alumnos </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -130,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
-                Registros
+                Registro Alumnos
                 </p>
               </a>
             </li>
@@ -143,6 +143,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="registro_carrera.php" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                Registro Carrera
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="registro_materias.php" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                Registro Materias
+                </p>
+              </a>
+            </li>
+            
             
 
             <li class="nav-item">
@@ -167,7 +186,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="col-md-12">
         <div class="card card-green">
           <div class="card-header">
-            <h3 class="card-title" class="text-center"> Registros</h3>
+            <h3 class="card-title" class="text-center"> Registro Alumnos</h3>
           </div>
           <!-- /.card-body -->
         </div>
@@ -190,7 +209,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container">
             <div class="card">
             <button type="button" class="btn btn-success" id="mostrarFormulario">
-                    <span class="glyphicon glyphicon-plus"></span> Agregar <i class="fa fa-plus"></i> </a></button>
+                    <span class="glyphicon glyphicon-plus"></span> Agregar Alumno<i class="fa fa-plus"></i> </a></button>
             </div>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

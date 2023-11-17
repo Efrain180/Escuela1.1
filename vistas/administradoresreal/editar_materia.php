@@ -10,63 +10,27 @@
 
                 <form id="editForm<?php echo $fila['id']; ?>" method="POST">
 
-                <div class="row mb-3">
+    <div class="row mb-3">
     <div class="col-md-4 sm-col-12">
       <label for="Nombre" class="form-label"> Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $fila['nombrea']; ?>" autofocus required>
+      <input type="text" class="form-control" id="materia" name="materia" value="<?php echo $fila['materia']; ?>" autofocus required>
 
     </div>
 
     <div class="col-md-4 sm-col-12 ">
-      <label for="Apellido paterno" class="form-label" class="bi bi-emoji-smile-upside-down"> Apellido paterno</label>
-      <input type="text" class="form-control" id="apellido_p" name="apellido_p" value="<?php echo $fila['apellido1']; ?>" required>
-
-    </div>
-
-    <div class="col-md-4 sm-col-12 ">
-      <label for="Apellido materno" class="form-label"> Apellido materno</label>
-      <input type="text" class="form-control" id="apellido_m" name="apellido_m" value="<?php echo $fila['apellido2']; ?>" required>
-
-    </div>
-  </div>
-
-
-  <div class=" row mb-3 ">
-
-  <div class="col-md-4 sm-col-12">
-      <label for="correo" class="form-label"> Correo electronico</label>
-      <input type="email" class="form-control" id="correo" name="correo" value="<?php echo $fila['correo']; ?>" required>
-
-    </div>
-
-  <div class="col-md-4 sm-col-12">
-      <label for="correo" class="form-label"> Contraseña</label>
-      <input type="text" class="form-control" id="contrasena" name="contrasena" value="<?php echo $fila['contrasena']; ?>" required>
-
-    </div>
-
-    <div class="col-md-4 sm-col-12 ">
-                      <label for="Fecha de nacimiento" class="form-label"> Fecha de nacimiento</label>
-                      <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" value="<?php echo $fila['fechana']; ?>" required>
-
-                    </div>
-
-    <div class="col-md-4 sm-col-12 ">
-                                            <label for="materia" class="form-label">Grupo</label>
-                                            <select id="grupo" name="grupo" class="form-control" required>
-                                                <option value="">Elije el grupo</option>
+                                            <label for="profesor" class="form-label">Profesor</label>
+                                            <select id="profesor" name="profesor" class="form-control" required>
+                                                <option value="">Elije el profesor</option>
                                                 <?php
 
 
 $bda = new Database;
 
-$queryyy = $bda->connect()->prepare("SELECT g.id, g.nombre, c.cuatrimestre 
-FROM grupos g
-INNER JOIN cuatrimestre c ON g.id_cuatri = c.id");
+$queryyy = $bda->connect()->prepare("SELECT * FROM maestros");
 $queryyy->execute(array());
 while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
     echo '
-<option value="'.$rowe['id'].'" >'.$rowe['nombre']. ' cuatrimestre '.$rowe['cuatrimestre']. '</option>
+<option value="'.$rowe['id'].'" >'.$rowe['nombre'] .$rowe['apellido1']. $rowe['apellido2']. '</option>
 
 
 ';
@@ -75,9 +39,27 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
 ?>
                                             </select>
 
-
-
                                         </div>
+
+
+
+
+    <div class="col-md-4 sm-col-12 ">
+                      <label for="Fecha de nacimiento" class="form-label"> Fecha de inicio</label>
+                      <input type="date" class="form-control" id="fecha_ini" name="fecha_ini" value="<?php echo $fila['per_ini']; ?>" required>
+
+                    </div>
+                     <div class="col-md-4 sm-col-12 ">
+                      <label for="Fecha de nacimiento" class="form-label"> Fecha Final</label>
+                      <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="<?php echo $fila['per_fin']; ?>" required>
+
+                    </div>
+
+
+  </div>
+
+
+ 
                     <br>
                     <input type="hidden" name="accion" value="editar_alum">
                     <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
@@ -95,7 +77,7 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
         var datosFormulario = $("#editForm" + id).serialize();
 
         $.ajax({
-            url: "../../controladores/functions.php",
+            url: "../../controladores/functions_materias.php",
             type: "POST",
             data: datosFormulario,
             dataType: "json",
@@ -103,7 +85,7 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
                 if (response === "correcto") {
                     alert("El registro se ha actualizado correctamente");
                     setTimeout(function() {
-                        location.assign('grupos.php');
+                        location.assign('registro_materias.php');
                     }, 2000);
                 } else {
                     alert("Ha ocurrido un error al actualizar el registro");

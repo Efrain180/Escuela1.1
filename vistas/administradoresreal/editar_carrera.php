@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h3 class="modal-title" id="exampleModalLabel">Editar Alumno</h3>
+                <h3 class="modal-title" id="exampleModalLabel">Editar carrera</h3>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">
                     <i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
@@ -13,60 +13,30 @@
                 <div class="row mb-3">
     <div class="col-md-4 sm-col-12">
       <label for="Nombre" class="form-label"> Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $fila['nombrea']; ?>" autofocus required>
+      <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $fila['nombre']; ?>" autofocus required>
 
     </div>
+
+
+
+    
+    
 
     <div class="col-md-4 sm-col-12 ">
-      <label for="Apellido paterno" class="form-label" class="bi bi-emoji-smile-upside-down"> Apellido paterno</label>
-      <input type="text" class="form-control" id="apellido_p" name="apellido_p" value="<?php echo $fila['apellido1']; ?>" required>
-
-    </div>
-
-    <div class="col-md-4 sm-col-12 ">
-      <label for="Apellido materno" class="form-label"> Apellido materno</label>
-      <input type="text" class="form-control" id="apellido_m" name="apellido_m" value="<?php echo $fila['apellido2']; ?>" required>
-
-    </div>
-  </div>
-
-
-  <div class=" row mb-3 ">
-
-  <div class="col-md-4 sm-col-12">
-      <label for="correo" class="form-label"> Correo electronico</label>
-      <input type="email" class="form-control" id="correo" name="correo" value="<?php echo $fila['correo']; ?>" required>
-
-    </div>
-
-  <div class="col-md-4 sm-col-12">
-      <label for="correo" class="form-label"> Contraseña</label>
-      <input type="text" class="form-control" id="contrasena" name="contrasena" value="<?php echo $fila['contrasena']; ?>" required>
-
-    </div>
-
-    <div class="col-md-4 sm-col-12 ">
-                      <label for="Fecha de nacimiento" class="form-label"> Fecha de nacimiento</label>
-                      <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" value="<?php echo $fila['fechana']; ?>" required>
-
-                    </div>
-
-    <div class="col-md-4 sm-col-12 ">
-                                            <label for="materia" class="form-label">Grupo</label>
-                                            <select id="grupo" name="grupo" class="form-control" required>
-                                                <option value="">Elije el grupo</option>
+                                            <label for="cuatri" class="form-label">Cuatrimestre</label>
+                                            <select id="cuatri" name="cuatri" class="form-control" required>
+                                                <option value="">Elije el cuatrimestre</option>
                                                 <?php
 
 
 $bda = new Database;
 
-$queryyy = $bda->connect()->prepare("SELECT g.id, g.nombre, c.cuatrimestre 
-FROM grupos g
-INNER JOIN cuatrimestre c ON g.id_cuatri = c.id");
+$queryyy = $bda->connect()->prepare("SELECT c.id, c.cuatrimestre 
+FROM cuatrimestre c");
 $queryyy->execute(array());
 while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
     echo '
-<option value="'.$rowe['id'].'" >'.$rowe['nombre']. ' cuatrimestre '.$rowe['cuatrimestre']. '</option>
+<option value="'.$rowe['id'].'" >'.$rowe['cuatrimestre']. '</option>
 
 
 ';
@@ -95,7 +65,7 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
         var datosFormulario = $("#editForm" + id).serialize();
 
         $.ajax({
-            url: "../../controladores/functions.php",
+            url: "../../controladores/functions_carrera.php",
             type: "POST",
             data: datosFormulario,
             dataType: "json",
@@ -103,7 +73,7 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
                 if (response === "correcto") {
                     alert("El registro se ha actualizado correctamente");
                     setTimeout(function() {
-                        location.assign('grupos.php');
+                        location.assign('registro_carrera.php');
                     }, 2000);
                 } else {
                     alert("Ha ocurrido un error al actualizar el registro");

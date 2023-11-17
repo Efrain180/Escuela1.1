@@ -130,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a href="grupos.php" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
-                Registros
+                Registro Alumnos
                 </p>
               </a>
             </li>
@@ -143,6 +143,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="registro_carrera.php" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                Registro Carrera
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="registro_materias.php" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                Registro Materias
+                </p>
+              </a>
+            </li>
+            
             
 
             <li class="nav-item">
@@ -167,7 +186,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="col-md-12">
         <div class="card card-green">
           <div class="card-header">
-            <h3 class="card-title" class="text-center"> Registros</h3>
+            <h3 class="card-title" class="text-center"> Registros Maestros</h3>
           </div>
           <!-- /.card-body -->
         </div>

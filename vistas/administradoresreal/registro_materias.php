@@ -33,7 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UTMIR | Menu</title>
+  <title>UTMIR | Registros de Materias </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -41,22 +41,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-
-
+  
 </head>
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
 
     <!-- Navbar -->
-
-
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="https://www.facebook.com/utmineral" target="_blank" class="nav-link" class="btn-red-social"><i class="fab fa-facebook-f"> Facebook</i></a>
         </li>
@@ -66,7 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class="nav-item d-none d-sm-inline-block">
           <a href="https://twitter.com/ut_mineral" target="_blank" class="nav-link" class="btn-red-social"><i class="fab fa-twitter"> Twitter</i></a>
         </li>
-        <li class="nav-item d-sm-inline-block">
+        <li class="nav-item  d-sm-inline-block">
           <p class="nav-link">WE ARE RAPTORS</p>
         </li>
         <li>
@@ -76,15 +73,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
           </div>
         </li>
-
         <li class="nav-item px-3 d-sm-inline-block">
-          <a href="../../Login/index.php"  class="nav-link">Cerrar sesion</a>
+          <a href="../../Login/index.php" class="nav-link">Cerrar sesion</a>
         </li>
       </ul>
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
+
+
+
         <!-- Notifications Dropdown Menu -->
     </nav>
     <!-- /.navbar -->
@@ -105,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <img src="../../imagenes/Efrain.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="perfil.php"  class="d-block"><?php  print('ADM. '.$row['nombre'].' '.$row['apellido1']) ?></a>
+            <a href="perfil.php"  class="d-block"><?php print('ADM. ' . $row['nombre'] . ' ' . $row['apellido1']) ?></a>
           </div>
         </div>
 
@@ -117,6 +116,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              <a href="administradores.php" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Menu
+                </p>
+              </a>
+            </li>
 
             <li class="nav-item">
               <a href="grupos.php" class="nav-link">
@@ -146,14 +154,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
             <li class="nav-item">
-              <a href="registro_materias.php" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
                 Registro Materias
                 </p>
               </a>
             </li>
-
+            
 
             <li class="nav-item">
               <a href="Informacion.php" class="nav-link">
@@ -171,75 +179,120 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- /.sidebar -->
     </aside>
 
-
-
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="col-md-12">
-        <div class="card card-orange">
-          <div class="card-header">
-            <h3 class="card-title" class="text-center"> Menu</h3>
-          </div>
-        </div>
-      </div>
 
+      <div class="col-md-12">
+        <div class="card card-green">
+          <div class="card-header">
+            <h3 class="card-title" class="text-center"> Registro Materias</h3>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
           <div class="row ">
-            <div class="col-md-12">
-              <h1 class="text-center">¿QUIENES SOMOS?</h1>
-            </div>
-          </div>
-        </div>
+
+
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
       </div>
+
 
       <div class="content">
         <div class="container-fluid">
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card card-green card-outline">
-                <div class="card-body">
-                  <h5 class="card-title " >
-                    MISION
-                  </h5>
-
-                  <p class="card-text">
-                    Ofrecer un entorno favorable donde las alumnas y los alumnos egresadas y egresados de la educación media superior, desarrollen bajo el contexto del modelo Técnico Superior Universitario, las competencias que les permitan aplicar lo aprendido, ser flexibles y adaptables a los diversos cambios del entorno socioeconómico de la zona de influencia, introduciendo una novedosa oferta educativa con sentido humano e integral, desarrollando el aspecto profesional y personal enfocado en valores y capacidad de análisis y resolución de problemas basada en un conocimiento incluyente que facilite la inserción en el ámbito laboral y el respeto activo al medio ambiente.
-                  </p>
-                  <div clas="row">
-                    <div class="col-md-4">
-                      <img src="../../imagenes/gal_5.jpg" class="img-fluid" >
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="col-md-6">
-              <div class="card card-green card-outline">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    VISION
-                  </h5>
-
-                  <p class="card-text">
-                  En el año 2019, la Universidad Tecnológica de Mineral de la Reforma será una de las mejores referencias en educación superior en la zona, mediante consolidación institucional y la constante búsqueda de formar profesionales integrales y competentes quienes una vez egresados al siempre cambiante mundo laboral, logren enfrentar satisfactoriamente cualquier tarea como un reto de mejora, comprendiendo no solo el proceso para resolver un problema sino ser conscientes de los efectos, denotando la calidad humana y el compromiso social como los pilares adquiridos durante su preparación en esta Universidad, necesarios para mejorar las condiciones sociales del entorno inmediato y reducir las adversidades propias de los retos mundiales actuales.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- /.col -->
-          </div> <!-- /.row -->
           
+          <div class="container">
+            <div class="card">
+            <button type="button" class="btn btn-success" id="mostrarFormulario">
+                    <span class="glyphicon glyphicon-plus"></span> Agregar Materia<i class="fa fa-plus"></i> </a></button>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // Esconder el formulario al principio
+        $("#registro").hide();
+
+        // Mostrar el formulario al hacer clic en el botón "Agregar"
+        $("#mostrarFormulario").click(function(){
+            $("#registro").toggle(); // Alternar la visibilidad del formulario
+        });
+    });
+</script>
+
+            <?php include "form_materias.php"; ?>
+              </div>
+
+              
+
+              <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Materia</th>
+                                <th>Profesor</th>
+                                <th>Fecha Inicial</th>
+                                <th>Fecha Final</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        <?php
+    require_once("../../controladores/conexion.php");
+    $db = new Database;
+
+    $query = $db->connect()->prepare('SELECT m.*, p.nombre AS nombrep, p.apellido1 AS apellido1p, p.apellido2 AS apellido2p 
+    FROM materias m
+    LEFT JOIN maestros p ON m.id_profesor = p.id');
+    $query->execute();
+    while ($fila = $query->fetch(PDO::FETCH_ASSOC)) :
+      $Profesor = $fila['nombrep'] .' ' . $fila['apellido1p'] .' ' . $fila['apellido2p'];
+    ?>
+        <tr>
+            <td><?php echo $fila['materia']; ?></td>
+            <td><?php echo $Profesor; ?></td>
+            <td><?php echo $fila['per_ini']; ?></td>
+            <td><?php echo $fila['per_fin']; ?></td>
+
+
+
+                                    <td>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editar<?php echo $fila['id']; ?>">
+                                            <i class="fa fa-edit "></i>
+                                        </button>
+                                        <a href="../../controladores/eliminar_materias.php?id=<?php echo $fila['id'] ?>" class="btn btn-danger btn-del" onclick="return confirmarEliminacion();" >
+                                            <i class="fa fa-trash "></i></a>
+                                    </td>
+                                </tr>
+                                <?php include "editar_materia.php"; ?>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                    <script>
+    function confirmarEliminacion() {
+        return confirm("¿Estás seguro de que deseas eliminar este registro?");
+    }
+</script>
+
+                    </script>
+
+
+                </div>
+            </div>
+
+
+
+            
+
+
+          </div>
         </div>
       </div>
-
     </div>
     <!-- /.content-wrapper -->
 
@@ -276,4 +329,3 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </body>
 
 </html>
-
