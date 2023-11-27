@@ -3,9 +3,9 @@
 include_once '../controladores/conexion.php';
 session_start();
 
-if (isset($_SESSION['rol'])&& $_SESSION['nombres']){
+if (isset($_SESSION['rol'])&& $_SESSION['nombres']&& $_SESSION['id']&& $_SESSION['grupo']){
 
-    switch($_SESSION['rol'] && $_SESSION['nombres']){
+    switch($_SESSION['rol'] && $_SESSION['nombres'] && $_SESSION['id']&& $_SESSION['grupo']){
         case 1:
             header('location: ../vistas/administrador/admin.php');
             break;
@@ -40,6 +40,17 @@ if (isset($_SESSION['rol'])&& $_SESSION['nombres']){
             $_SESSION['nombres'] = $name;
             $rol = $row[7];
             $_SESSION['rol'] = $rol;
+
+            $id_alumno = $row[0];
+            $_SESSION['id'] = $id_alumno;
+
+            $id_grupo = $row[8];
+            $_SESSION['grupo'] = $id_grupo;
+
+            
+
+
+        
             switch($_SESSION['rol']){
                 case 1:
                     header('location: ../vistas/administrador/admin.php');
@@ -63,6 +74,8 @@ if (isset($_SESSION['rol'])&& $_SESSION['nombres']){
             $query->execute(['correo' => $correo, 'pass' => $pass]);
     
             $row = $query->fetch(PDO::FETCH_NUM);
+
+
             
             if($row == true){
                 //validar usuario
@@ -70,7 +83,17 @@ if (isset($_SESSION['rol'])&& $_SESSION['nombres']){
                 $name= $row[1];
                 $_SESSION['nombres'] = $name;
                 $rol = $row[6];
-                $_SESSION['rol'] = $rol ;
+                $_SESSION['rol'] = $rol;
+
+                // Obtener el ID del maestro desde la consulta
+                $id_maestro = $row[0]; // Asumiendo que la posición 0 contiene el ID del maestro
+
+                // Almacenar el ID del maestro en $_SESSION['id']
+                $_SESSION['id'] = $id_maestro;
+
+
+
+                
                 switch($_SESSION['rol']){
                     case 1:
                         header('location: ../vistas/administrador/admin.php');
@@ -86,8 +109,8 @@ if (isset($_SESSION['rol'])&& $_SESSION['nombres']){
             
                             default;
                               }
-                
-    
+            
+
                 }else{
                     // no existe el usuario
                     $db = new Database();

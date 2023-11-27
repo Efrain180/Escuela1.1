@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accion'])) {
         $profesor = $_POST['profesor'];
         $fecha_ini = $_POST['fecha_ini'];
         $fecha_fin = $_POST['fecha_fin'];
+        $grupo = $_POST['grupo'];
     
 
         try {
@@ -19,10 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accion'])) {
             $pdo = $db->connect();
 
             // Preparar la consulta para actualizar el registro del alumno
-            $query = $pdo->prepare("UPDATE materias SET materia = ?, id_profesor = ?, per_ini = ?, per_fin = ? WHERE id = ?");
+            $query = $pdo->prepare("UPDATE materias SET materia = ?, id_profesor = ?, per_ini = ?, per_fin = ?, id_grupos = ? WHERE id = ?");
             
             // Ejecutar la consulta con los datos proporcionados
-            $query->execute([$materia, $profesor, $fecha_ini, $fecha_fin, $id]);
+            $query->execute([$materia, $profesor, $fecha_ini, $fecha_fin, $grupo, $id]);
 
             // Verificar si se realizó la actualización correctamente
             if ($query->rowCount() > 0) {

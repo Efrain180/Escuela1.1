@@ -132,6 +132,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="vistas/paginas/clases.php" class="nav-link">
+               <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Clases
+                </p>
+              </a>
+            </li>
+
             <li class="nav-item">
               <a href="vistas/paginas/Informacion.php" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>

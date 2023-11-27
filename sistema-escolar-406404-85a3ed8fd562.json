@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "sistema-escolar-406404",
+  "private_key_id": "85a3ed8fd56242982b83fb65ad88e74c5502937b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCOT558JyRqsDG4\nbrPXb3iD4tYZSd865JFgg+cjQuv/wErRMDXwWkNAQlG+R1S0K7HhGa8qwlKymLAo\nUEUPvx5dxIrdCR2GGRw1DASiBGI7R8wTLupyMs8GPwkkyJsM29OrZYmHuIp2KdSY\ndDQQD4NsyTqbqbVVGaPBwaZscxVYx2DAjezK0oWjFQsVFZ0cHN94Ezan+3XV2OgX\nM+tOLnrMsYCoPUe1WTV7lARIChj2ilWB3Lg8qMb1ug1irQDDMhzNk+P9q47q4vyi\nnB/fNt+pidBDE/VnS02Ms6El6HZCJyqCkxnO8o1guyx0esvruYTm34sirTmL2JNt\nQpJFZ7LtAgMBAAECggEAQpVf+oi50i0D5l3tSQP/p/1O3OAiUMS2fCja0TWzg6Kt\nnrhm1ED3LC6bXmKzb+TtwfspaOEoniUwbnw4A8kQ5SBbNFXaeW5wMyWfWUqhx0it\nY+BUkv/QuwRtO8ecO+TyYUQNl/Gw3t5teLMN1OHdRN3VzRUXIWzwoGwBeMZTm4hi\nxkmWmB/xLpV1C8MA9eraAr1/PC3iFhlFNkJSUinSUKxN3p+XQblgzPY33FIykrkX\nF8Vo5wXdvbzyGUl7GxHRFOx5jtjmxUVervIWAd77QgzzTGThSD+89R5I8pou53r6\nUpH0ccuQOnQ/61gLXwbEOswEoT//sruxusylgqCnJQKBgQDDHlL4ZPaVybtb+zgc\nHMLT1lmj0I6wQCltgfhPnco51L3kuJDIAWlPClJHMJQ1C3mvI1DVHddDuYwls5Xs\nKwGkqPuVhA/oeIkXuTVWCJybnrutDy5DF+Qju1ITg/6csLAMZx0DfKAPs1NAyaH0\nPOKLg2EHpIq69CJwshtsINZNOwKBgQC6tyQdAChZ5DLOfaRCIaibxO16e3px6bah\nlY/1t/zkLxclQh9611saYKrinXeNd4DgVhwkEhR9Ju8l9LTHMkA2w/YEoIJ7To7+\nOye2pQtIYiHXBE618v1bYtUPBgPJEuGkU6WESTjRbsCbZZXjJ1ZREDRJ/fu/f6WZ\n48RN/3Kd9wKBgHeAvBpsY+ZrzrfQTpZROzZZYz+Evc/PDFCIuNeycagn10IdlHca\n/i+tx6TYaP1wENAmlhxhEXXmT6LLsfgagwAhiy0Q3FlqcbS496TA04Iwnwuob5Ii\nMNV9phBT2H6JbNm70bZP/wx+rW/RzsJzA+GkzqnKqjlEy08wlsEL/5T/AoGARhJD\nEEsl2Y5lbs8CHPtqvoKqKOQ8MJHoQz3Q2ANjefMeOZJWJBC8FOsgVomH+2RUzlwi\nlXrfi5RX/aOXUIZQSP1Dz7q5HTN/QHPM1KOd111Um8/3BhuZ73jowomcVBKs8bGe\nlUWxeA+bYvY9yRDTOPre1MHnf5eU+2raGfd6+UMCgYAPlclT1PGhG4dRxkS2wr+8\nXFfsv2UjSQx/F9N51yF50uU7lzccj79zZwVSIF8k1mG0fOQWAnuT5TjUhBok3SdZ\n8RU9MviJGX25mOSfTvWslFhubzrRhki7qXS9HQUFI2jf3UZExahgFDzW93AoKMQh\nZ3/Q2qhBj2S5uWZ+c6I4oA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "prueba@sistema-escolar-406404.iam.gserviceaccount.com",
+  "client_id": "115900318585705986769",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/prueba%40sistema-escolar-406404.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

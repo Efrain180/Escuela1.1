@@ -36,6 +36,8 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
 
 
 
+
+
     <div class="col-md-4 sm-col-12 ">
                       <label for="Fecha de nacimiento" class="form-label"> Fecha de inicio</label>
                       <input type="date" class="form-control" id="fecha_ini" name="fecha_ini" placeholder="Fecha de inicio" required>
@@ -46,6 +48,33 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
                       <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" placeholder="Fecha Final" required>
 
                     </div>
+
+
+                    <div class="col-md-4 sm-col-12 ">
+                                            <label for="grupo" class="form-label">Grupo</label>
+                                            <select id="grupo" name="grupo" class="form-control" required>
+                                                <option value="">Elije el grupo</option>
+                                                <?php
+
+
+$bda = new Database;
+
+$queryyy = $bda->connect()->prepare("SELECT g.id, g.nombre, c.cuatrimestre 
+FROM grupos g
+INNER JOIN cuatrimestre c ON g.id_cuatri = c.id");
+$queryyy->execute(array());
+while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
+    echo '
+<option value="'.$rowe['id'].'" >'.$rowe['nombre']. ' cuatrimestre '.$rowe['cuatrimestre']. '</option>
+
+
+';
+}
+
+?>
+                                            </select>
+
+                                        </div>
 
 
 

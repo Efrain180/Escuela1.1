@@ -4,7 +4,7 @@
 
   <div class="row mb-3">
     <div class="col-md-4 sm-col-12">
-      <label for="Nombre" class="form-label"> Nombre</label>
+      <label for="Nombre" class="form-label"> Nombre </label>
       <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de la carrera" autofocus required>
 
     </div>
@@ -13,7 +13,7 @@
 
 
     <div class="col-md-4 sm-col-12 ">
-                                            <label for="cuatri" class="form-label"></label>
+                                            <label for="cuatri" class="form-label">Cuatrimestre</label>
                                             <select id="cuatri" name="cuatri" class="form-control" required>
                                                 <option value="">Elije el cuatrimestre</option>
                                                 <?php

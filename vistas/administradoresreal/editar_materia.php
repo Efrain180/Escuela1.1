@@ -40,6 +40,34 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
                                             </select>
 
                                         </div>
+                                        <div class="col-md-4 sm-col-12 ">
+                                            <label for="grupo" class="form-label">Grupo</label>
+                                            <select id="grupo" name="grupo" class="form-control" required>
+                                                <option value="">Elije el grupo</option>
+                                                <?php
+
+
+$bda = new Database;
+
+$queryyy = $bda->connect()->prepare("SELECT g.id, g.nombre, c.cuatrimestre 
+FROM grupos g
+INNER JOIN cuatrimestre c ON g.id_cuatri = c.id");
+$queryyy->execute(array());
+while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
+    echo '
+<option value="'.$rowe['id'].'" >'.$rowe['nombre']. ' cuatrimestre '.$rowe['cuatrimestre']. '</option>
+
+
+';
+}
+
+?>
+                                            </select>
+
+                                        </div>
+                                        
+
+
 
 
 

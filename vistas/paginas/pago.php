@@ -137,6 +137,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+            
+            <li class="nav-item">
+              <a href="clases.php" class="nav-link">
+               <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Clases
+                </p>
+              </a>
+            </li>
+
             <li class="nav-item">
               <a href="Informacion.php" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
@@ -200,62 +210,6 @@ echo "<h2>El pago es de " . $pago . "</h2>";
             <div class="tab-pane active" id="pago">
 
         
-
-
-
-<script src="https://www.paypal.com/sdk/js?client-id=ASOd9M3cj2Qy9nKCuGomPwP1hKN_yRPyy05GrV8_mp98wGRJfMODDowLJ-WU1kb9HgTVtfExBWAJH7QW"></script>
-<div id="paypal-button-container"></div>
- <script>
-                paypal.Buttons({
-                  style:{
-
-                  },
-
-                  createOrder: function(data, actions){
-                    return actions.order.create({
-                      purchase_units: [{
-                        amount: {
-                          value: <?php echo $pago ?>
-                         }
-                      }]
-                    });
-
-                  },
-
-                  onApprove: function(data, actions) {
-                    let url = '../../controladores/captura.php'
-                    actions.order.capture().then(function(detalles){
-                      window.location.href = "procesado.php";
-
-                      return fetch(url, { 
-                        method: 'POST',
-                        headers: {
-                          'content-type': 'application/json'
-                        },
-
-                        body: JSON.stringify({
-                          detalles: detalles
-                        })
-                      })
-
-
-                    });
-
-
-                  },
-
-
-
-                  
-                  onCancel: function(data){
-                    alert('Pago Cancelado');
-                    console.log(data);
-                  }
-
-                }).render('#paypal-button-container');
- </script>
-
-
 
 
 </div>

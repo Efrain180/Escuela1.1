@@ -235,6 +235,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <tr>
                                 <th>Materia</th>
                                 <th>Profesor</th>
+                                <th>Carrera</th>
                                 <th>Fecha Inicial</th>
                                 <th>Fecha Final</th>
 
@@ -246,16 +247,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
     require_once("../../controladores/conexion.php");
     $db = new Database;
 
-    $query = $db->connect()->prepare('SELECT m.*, p.nombre AS nombrep, p.apellido1 AS apellido1p, p.apellido2 AS apellido2p 
+    $query = $db->connect()->prepare('SELECT m.*, p.nombre AS nombrep, p.apellido1 AS apellido1p, p.apellido2 AS apellido2p, g.nombre AS carrera, g.id_cuatri AS cuatrimestre, c.cuatrimestre
     FROM materias m
-    LEFT JOIN maestros p ON m.id_profesor = p.id');
+    LEFT JOIN maestros p ON m.id_profesor = p.id
+    LEFT JOIN grupos g ON m.id_grupos = g.id
+    LEFT JOIN cuatrimestre c ON g.id_cuatri = c.id');
+   
+    
     $query->execute();
     while ($fila = $query->fetch(PDO::FETCH_ASSOC)) :
       $Profesor = $fila['nombrep'] .' ' . $fila['apellido1p'] .' ' . $fila['apellido2p'];
+      $carrera = $fila['carrera'] .' cuatrimestre '. $fila['cuatrimestre'];
     ?>
         <tr>
             <td><?php echo $fila['materia']; ?></td>
             <td><?php echo $Profesor; ?></td>
+            <td><?php echo $carrera; ?></td>
             <td><?php echo $fila['per_ini']; ?></td>
             <td><?php echo $fila['per_fin']; ?></td>
 
