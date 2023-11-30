@@ -193,128 +193,60 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <div class="card-body ">
 
-                                <form id="registro" name="registro" method="POST" action="../../../controladores/cal.php" autocomplete="off" class=" row g-3">
+                            <div class="card-body">
+                <div class="table-responsive">
+                <?php
+$id_maestro = $_SESSION['id'];
 
-                                    <div class="row mb-3">
+// Consulta para obtener las materias asignadas al maestro
+$query_materias = $db->connect()->prepare('SELECT m.materia, g.nombre AS grupo, c.cuatrimestre, g.id AS id_grupo, m.id AS id_materia
+    FROM materias m
+    INNER JOIN grupos g ON m.id_grupos = g.id
+    INNER JOIN cuatrimestre c ON g.id_cuatri = c.id
+    WHERE m.id_profesor = :id_maestro');
+$query_materias->execute(array(':id_maestro' => $id_maestro));
 
-                                    <div class="col-md-4 sm-col-12 ">
-                                            <label for="alumno" class="form-label">Alumno</label>
-                                            <select id="alumno" name="alumno" class="form-control" required>
-                                                <option value="">Elije al alumno</option>
-                                                <?php
+// Comprobar si se encontraron materias asignadas al maestro
+if ($query_materias->rowCount() > 0) {
+    // Comienzo de la tabla HTML con el mismo estilo que el segundo código
+    echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Materia</th>
+                    <th>Grupo</th>
+                    <th>Cuatrimestre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>';
+    
+    // Recorrer los resultados y mostrar cada materia, grupo y cuatrimestre en la tabla
+    while ($row_materia = $query_materias->fetch(PDO::FETCH_ASSOC)) {
+        echo '<tr>
+                <td>' . $row_materia['materia'] . '</td>
+                <td>' . $row_materia['grupo'] . '</td>
+                <td>' . $row_materia['cuatrimestre'] . '</td>
+                <td><a href="lista_alumnos.php?id_materia=' . $row_materia['id_materia'] . '&id_grupo=' . $row_materia['id_grupo'] . '" class="btn btn-primary">Registrar Asistencias</a>
+                <a href="tabla_asistencias.php?id_materia=' . $row_materia['id_materia'] . '&id_grupo=' . $row_materia['id_grupo'] . 'id_profesor=' . $id_maestro . '" class="btn btn-primary"> Ver Asistencias</a></td>
 
+              </tr>';
+    }
 
-$bda = new Database;
-
-$queryyy = $bda->connect()->prepare("SELECT * FROM login1");
-$queryyy->execute(array());
-while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
-    echo '
-<option value="'.$rowe['id'].'" >' . $rowe['nombrea'] .' '.$rowe['apellido1'].' '.$rowe['apellido2']. '</option>
-
-
-';
+    // Fin de la tabla HTML
+    echo '</tbody></table>';
+} else {
+    echo 'No se encontraron materias asignadas.';
 }
-
 ?>
-                                            </select>
-
-                                        </div>
-
-                                        
-
-                                        <div class="col-md-4 sm-col-12 ">
-                                            <label for="materia" class="form-label">Materia a calificar</label>
-                                            <select id="materia" name="materia" class="form-control" required>
-                                                <option value="">Elije la materia</option>
-                                                <?php
-
-
-$bda = new Database;
-
-$queryyy = $bda->connect()->prepare("SELECT * FROM materias");
-$queryyy->execute(array());
-while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
-    echo '
-<option value="'.$rowe['id'].'" >' . $rowe['materia'] . '</option>
-
-
-';
-}
-
-?>
-                                            </select>
-
-                                        </div>
-
-
-                                        <div class="col-md-4 sm-col-12 ">
-                                            <label for="periodo" class="form-label">Periodo</label>
-                                            <select id="periodo" name="periodo" class="form-control" required>
-                                                <option value="">Elije el periodo</option>
-                                                <?php
-
-
-$bda = new Database;
-
-$queryyy = $bda->connect()->prepare("SELECT * FROM periodo");
-$queryyy->execute(array());
-while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
-    echo '
-<option value="'.$rowe['id'].'" >' . $rowe['nombre'] . '</option>
-
-
-';
-}
-
-?>
-                                            </select>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3 ">
-
-
-                                        <div class="col-md-6 sm-col-12 ">
-                                            <label for="maestro" class="form-label">Maestro que califica</label>
-                                            <select id="maestro" name="maestro" class="form-control" required>
-                                                <option value="">¿Quien eres?</option>
-                                                <?php
-
-
-$bda = new Database;
-
-$queryyy = $bda->connect()->prepare("SELECT * FROM maestros");
-$queryyy->execute(array());
-while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
-    echo '
-<option value="'.$rowe['id'].'" >' . $rowe['nombre'] .' '.$rowe['apellido1']. '</option>
-
-
-';
-}
-
-?>
-                                            </select>
-
-                                        </div>
-                                        <div class="col-md-6 sm-col-12">
-                                            <label for="calificacion" class="form-label">Calificacion</label>
-                                            <input type="text" class="form-control" id="calificacion" name="calificacion" placeholder="10" value="" required>
-                                        </div>
-
-                                    </div>
 
 
 
-                                    <div class="col-md-12 sm-col-12">
-                                        <button id="guarda" name="guarda" class="btn btn-success" type="submit">Guardar</button>
-                                    </div>
+              </div>
 
+                           
 
+                        </div>
 
-                                </form>
                             </div>
 
                         </div>
