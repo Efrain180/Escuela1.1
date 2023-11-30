@@ -229,53 +229,63 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
               
 
-              <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Apellido paterno</th>
-                                <th>Apellido Materno</th>
-                                <th>Nacimiento</th>
-                                <th>Correo</th>
-                                <th>Grupo</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                        <?php
-    require_once("../../controladores/conexion.php");
-    $db = new Database;
-
-    $query = $db->connect()->prepare('SELECT l.*, g.nombre AS nombre_grupo, c.cuatrimestre 
-    FROM login1 l 
-    LEFT JOIN grupos g ON l.id_grupo = g.id 
-    LEFT JOIN cuatrimestre c ON g.id_cuatri = c.id');
-    $query->execute();
-    while ($fila = $query->fetch(PDO::FETCH_ASSOC)) :
-      $grupo_cuatri = $fila['nombre_grupo'] . ' - Cuatrimestre ' . $fila['cuatrimestre'];
-    ?>
-        <tr>
-            <td><?php echo $fila['nombrea']; ?></td>
-            <td><?php echo $fila['apellido1']; ?></td>
-            <td><?php echo $fila['apellido2']; ?></td>
-            <td><?php echo $fila['fechana']; ?></td>
-            <td><?php echo $fila['correo']; ?></td>
-            <td><?php echo $grupo_cuatri; ?></td>
-
-
-                                    <td>
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editar<?php echo $fila['id']; ?>">
-                                            <i class="fa fa-edit "></i>
-                                        </button>
-                                        <a href="../../controladores/eliminar_al.php?id=<?php echo $fila['id'] ?>" class="btn btn-danger btn-del" onclick="return confirmarEliminacion();" >
-                                            <i class="fa fa-trash "></i></a>
-                                    </td>
-                                </tr>
-                                <?php include "editar_alumno.php"; ?>
-                            <?php endwhile; ?>
+<!-- Tu tabla HTML -->
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Nacimiento</th>
+                    <th>Correo</th>
+                    <th>Grupo</th>
+                    <th>Foto</th> <!-- Nueva columna para la foto -->
+                    <th>Acciones</th> <!-- Botones de acciones -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                require_once("../../controladores/conexion.php");
+                $db = new Database;
+                $query = $db->connect()->prepare('SELECT l.*, g.nombre AS nombre_grupo, c.cuatrimestre 
+                FROM login1 l 
+                LEFT JOIN grupos g ON l.id_grupo = g.id 
+                LEFT JOIN cuatrimestre c ON g.id_cuatri = c.id');
+                
+                $query->execute();
+                while ($fila = $query->fetch(PDO::FETCH_ASSOC)) :
+                    $grupo_cuatri = $fila['nombre_grupo'] . ' - Cuatrimestre ' . $fila['cuatrimestre'];
+                ?>
+                    <tr>
+                        <td><?php echo $fila['nombrea']; ?></td>
+                        <td><?php echo $fila['apellido1']; ?></td>
+                        <td><?php echo $fila['apellido2']; ?></td>
+                        <td><?php echo $fila['fechana']; ?></td>
+                        <td><?php echo $fila['correo']; ?></td>
+                        <td><?php echo $grupo_cuatri; ?></td>
+                        <td>
+                            <?php
+                                $ruta_foto = '../' . $fila['ruta_foto'];
+                            if ($ruta_foto && file_exists($ruta_foto)) {
+                                echo '<a href="' . $ruta_foto . '"><img src="' . $ruta_foto . '" alt="Descripción de la imagen" style="max-width: 50px; max-height: 50px;"></a>';
+                            } else {
+                                echo 'No disponible';
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editar<?php echo $fila['id']; ?>">
+                                <i class="fa fa-edit "></i>
+                            </button>
+                            <a href="../../controladores/eliminar_al.php?id=<?php echo $fila['id'] ?>" class="btn btn-danger btn-del" onclick="return confirmarEliminacion();">
+                                <i class="fa fa-trash "></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php include "editar_alumno.php"; ?>
+                <?php endwhile; ?>
                         </tbody>
                     </table>
                     <script>
@@ -284,7 +294,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     }
 </script>
 
-                    </script>
 
 
                 </div>

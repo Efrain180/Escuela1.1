@@ -1,10 +1,8 @@
 <?php
-require_once 'conexion.php'; // Reemplaza 'ruta_a_tu_database.php' con la ruta correcta de tu archivo Database.php
+require_once 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accion'])) {
-    // Verificar si la acción es para editar_alum
     if ($_POST['accion'] === 'editar_alum') {
-        // Obtener los datos del formulario
         $id = $_POST['id'];
         $nombre = $_POST['nombre'];
         $apellido_p = $_POST['apellido_p'];
@@ -14,29 +12,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accion'])) {
         $fecha_nac = $_POST['fecha_nac'];
         $grupo = $_POST['grupo'];
 
+        // Procesar la imagen si se sube una nueva foto
+        if (isset($_FILES['nueva_foto']) && $_FILES['nueva_foto']['error'] === UPLOAD_ERR_OK) {
+            $nombre_archivo = $_FILES['nueva_foto']['name'];
+            $archivo_temporal = $_FILES['nueva_foto']['tmp_name'];
+            $ruta_foto = '../Fotos_alumnos/' . $nombre_archivo;
+
+            echo "Nombre del archivo: " . $nombre_archivo . "<br>";
+            echo "Ruta temporal: " . $archivo_temporal . "<br>";
+            echo "Ruta destino: " . $ruta_foto . "<br>";
+
+            if (move_uploaded_file($archivo_temporal, $ruta_foto)) {
+                try {
+                    $db = new Database();
+                    $pdo = $db->connect();
+
+                    // Actualizar la ruta de la foto en la base de datos
+                    $query_foto = $pdo->prepare("UPDATE login1 SET ruta_foto = ? WHERE id = ?");
+                    $query_foto->execute([$ruta_foto, $id]);
+                } catch (PDOException $e) {
+                    echo json_encode(["mensaje" => "error_db_imagen", "detalle" => $e->getMessage()]);
+                    exit;
+                }
+            } else {
+                echo json_encode("error_subida_imagen");
+                exit;
+            }
+        }
+
         try {
-            // Crear una instancia de la clase Database
             $db = new Database();
-            // Obtener la conexión
             $pdo = $db->connect();
 
-            // Preparar la consulta para actualizar el registro del alumno
+            // Actualizar otros datos del alumno en la base de datos
             $query = $pdo->prepare("UPDATE login1 SET nombrea = ?, apellido1 = ?, apellido2 = ?, correo = ?, contrasena = ?, fechana = ?, id_grupo = ? WHERE id = ?");
-            
-            // Ejecutar la consulta con los datos proporcionados
             $query->execute([$nombre, $apellido_p, $apellido_m, $correo, $contrasena, $fecha_nac, $grupo, $id]);
 
-            // Verificar si se realizó la actualización correctamente
+            // Respuesta JSON
             if ($query->rowCount() > 0) {
-                // La actualización se realizó con éxito
                 echo json_encode("correcto");
             } else {
-                // No se pudo actualizar (puede que no haya cambios)
-                echo json_encode("sin cambios");
+                echo json_encode("sin_cambios");
             }
         } catch (PDOException $e) {
-            // Manejar cualquier error de la base de datos
-            echo json_encode("error_db");
+            echo json_encode(["mensaje" => "error_db", "detalle" => $e->getMessage()]);
         }
     }
 }

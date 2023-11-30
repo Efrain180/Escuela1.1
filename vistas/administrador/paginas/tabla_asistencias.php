@@ -197,6 +197,147 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
               <div class="card-body">
                 <div class="table-responsive">
+                <?php
+$id_materia = $_GET['id_materia'] ?? null;
+
+$database = new Database();
+$db = $database->connect();
+
+if ($id_materia !== null) {
+    $query_alumnos = $db->prepare('SELECT l.id, l.nombrea, l.apellido1 FROM login1 l 
+                                   INNER JOIN grupos g ON l.id_grupo = g.id 
+                                   INNER JOIN materias m ON m.id_grupos = g.id 
+                                   WHERE m.id = :id_materia');
+    $query_alumnos->execute(array(':id_materia' => $id_materia));
+
+    if ($query_alumnos->rowCount() > 0) {
+        $alumnos = $query_alumnos->fetchAll(PDO::FETCH_ASSOC);
+
+        $query_fechas = $db->prepare('SELECT DISTINCT fecha_asistencia FROM asistencias WHERE id_materia = :id_materia ORDER BY fecha_asistencia');
+        $query_fechas->execute(array(':id_materia' => $id_materia));
+        $fechas = $query_fechas->fetchAll(PDO::FETCH_COLUMN);
+
+        // Obtener el total de clases para la materia
+        $query_total_clases = $db->prepare('SELECT COUNT(DISTINCT fecha_asistencia) AS total_clases FROM asistencias WHERE id_materia = :id_materia');
+        $query_total_clases->execute(array(':id_materia' => $id_materia));
+        $result_total_clases = $query_total_clases->fetch(PDO::FETCH_ASSOC);
+        $total_clases_real = $result_total_clases['total_clases'];
+        echo '<td><a href="clases.php" class="btn btn-primary">Regresar</a></td><br><br>';
+        echo '<div class="table-responsive">';
+        echo '<table class="table table-bordered">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Nombre</th>';
+
+        foreach ($fechas as $fecha) {
+            echo '<th>' . $fecha . '</th>';
+        }
+
+        echo '<th>Total Clases</th>';
+        echo '<th>Asistencias</th>';
+        echo '<th>% Asistencias</th>';
+        echo '<th>Faltas</th>';
+        echo '<th>Retardos</th>';
+        echo '<th>Porcentaje Real</th>';
+        echo '<th>Examen</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        foreach ($alumnos as $alumno) {
+            $id_alumno = $alumno['id'];
+            $nombre = $alumno['nombrea'];
+            $apellido = $alumno['apellido1'];
+
+            $query_fechas_alumno = $db->prepare('SELECT fecha_asistencia, estado FROM asistencias WHERE id_alumno = :id_alumno AND id_materia = :id_materia ORDER BY fecha_asistencia');
+            $query_fechas_alumno->execute(array(':id_alumno' => $id_alumno, ':id_materia' => $id_materia));
+
+            $fechas_alumno = [];
+            $estados_alumno = [];
+
+            while ($row = $query_fechas_alumno->fetch(PDO::FETCH_ASSOC)) {
+                $fechas_alumno[] = $row['fecha_asistencia'];
+                $estados_alumno[] = $row['estado'];
+            }
+
+            $total_clases_alumno = count($fechas_alumno);
+            $asistencias = 0;
+            $faltas = 0;
+            $retardos = 0;
+
+            foreach ($estados_alumno as $estado) {
+                if ($estado == 'asistio') {
+                    $asistencias++;
+                } elseif ($estado == 'no_vino') {
+                    $faltas++;
+                } elseif ($estado == 'retardo') {
+                    $retardos++;
+                }
+            }
+
+            while ($retardos >= 3) {
+                $asistencias += 2;
+                $faltas++;
+                $retardos -= 3;
+            }
+            
+
+            echo '<tr>';
+            echo '<td>' . $nombre . ' ' . $apellido . '</td>';
+
+            foreach ($fechas as $fecha) {
+                $indice = array_search($fecha, $fechas_alumno);
+                $estado = $indice !== false ? $estados_alumno[$indice] : 'No registrado';
+
+                if ($estado == 'asistio') {
+                    echo '<td style="background-color: lightgreen;">A</td>';
+                } elseif ($estado == 'no_vino') {
+                    echo '<td style="background-color: #FFC0CB;">F</td>';
+                } elseif ($estado == 'retardo') {
+                    echo '<td style="background-color: yellow;">R</td>';
+                } else {
+                    echo '<td>' . $estado . '</td>';
+                }
+            }
+
+            echo '<td>' . $total_clases_alumno . '</td>';
+            echo '<td>' . $asistencias . '</td>';
+            echo '<td>' . ($total_clases_alumno > 0 ? round(($asistencias / $total_clases_alumno) * 100, 2) : 0) . '%</td>';
+            echo '<td>' . $faltas . '</td>';
+            echo '<td>' . $retardos . '</td>';
+
+          // Cálculo del porcentaje real considerando los retardos como asistencias
+          $denominator = $total_clases_real > 0 ? $total_clases_real : 1; // Evitar la división por cero
+          $porcentaje_asistencias_reales = (($asistencias + $retardos) / $denominator) * 100;
+
+          
+            echo '<td>' . round($porcentaje_asistencias_reales, 2) . '%</td>';
+
+            if ($porcentaje_asistencias_reales >= 80) {
+                echo '<td style="background-color: lightgreen;">Con derecho</td>';
+            } else {
+                echo '<td style="background-color: #FFC0CB;">Sin derecho</td>';
+            }
+
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+        echo '</div>';
+        echo '<br><br>';
+    } else {
+        echo "No hay registros de asistencias para este alumno en esta materia.";
+    }
+} else {
+    echo "Falta el ID de materia.";
+}
+?>
+
+
+
+
+
 
                 <?php
 // Obtener el ID de la materia (puedes pasarlo por GET, POST, etc.)
@@ -230,7 +371,7 @@ if ($id_materia !== null) {
             echo '<td>' . $row['nombre_alumno'] . ' ' . $row['apellidos1'] . ' ' . $row['apellidos2'] .'</td>';
             echo '<td>' . $row['nombre_materia'] . '</td>';
             echo '<td><a href="' . $nuevaRuta . '" target="_blank">' . $nombreArchivo . '</a></td>';
-            echo '<td><form method="post" action="eliminar_justificante.php">
+            echo '<td><form method="post" action="eliminar_justificante.php?id_materia=' . $id_materia . '&id_alumno=' . $id_alumno . '">
             <input type="hidden" name="id_justificante" value="' . $idJustificante . '">
             <input type="submit" value="Eliminar" class="btn btn-danger">
             </form></td>';

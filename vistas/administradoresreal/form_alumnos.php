@@ -1,6 +1,6 @@
 <div class="card-body ">
 
-<form id="registro" name="registro" method="POST" action="../../controladores/guarda.php" autocomplete="off" class=" row g-3">
+<form id="registro" name="registro" method="POST" action="../../controladores/guarda.php" enctype="multipart/form-data" autocomplete="off" class=" row g-3">
 
   <div class="row mb-3">
     <div class="col-md-4 sm-col-12">
@@ -69,12 +69,22 @@ while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
 
                                         </div>
 
+                                        <div class="col-md-4 sm-col-12 ">
+                      <label for="foto" class="form-label">Foto Alumno</label>
+                      <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+
+                    </div>
+
   </div>
 
 
 
+ 
+
+
+
   <div class="col-md-12 sm-col-12">
-    <button id="guarda" name="guarda" class="btn btn-success" type="submit">Guardar</button>
+    <button id="guarda" name="guarda" class="btn btn-success" type="submit"  >Guardar</button>
   </div>
 
 

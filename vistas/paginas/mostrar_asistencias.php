@@ -208,6 +208,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <div class="card-body">
                 <div class="table-responsive">
+
                 <?php
 // Obtener los IDs de materia y alumno desde los parámetros
 $id_materia = $_GET['id_materia'] ?? null;
@@ -273,11 +274,11 @@ if ($id_materia !== null && $id_alumno !== null) {
         echo '<tr><th>Estado</th>';
         foreach ($estados as $estado) {
             if ($estado == 'asistio') {
-                echo '<td>A</td>';
+                echo '<td style="background-color: lightgreen;">A</td>';
             } elseif ($estado == 'no_vino') {
-                echo '<td style="color:red;">F</td>';
+                echo '<td style="background-color: #FFC0CB;">F</td>';
             } elseif ($estado == 'retardo') {
-                echo '<td style="color:yellow;">R</td>';
+                echo '<td style="background-color: yellow;">R</td>';
             } else {
                 echo '<td>' . $estado . '</td>';
             }
@@ -287,29 +288,29 @@ if ($id_materia !== null && $id_alumno !== null) {
         echo '<td><b>' . ($total_clases > 0 ? round(($asistencias / $total_clases) * 100, 2) : 0) . '%</b></td>';
         echo '<td><b>' . $faltas . '</b></td>';
         echo '<td><b>' . $retardos . '</b></td></tr>';
-        echo '</tbody>';
-        echo '</table>';
-        echo '</div>';
+        
+// Cálculo de valores para el porcentaje considerando los retardos como asistencias acumuladas
+$asistencias_reales = $asistencias + $retardos;
+$porcentaje_asistencias_reales = ($asistencias_reales / $total_clases) * 100;
 
-        // Cálculo de valores para el porcentaje considerando los retardos como asistencias acumuladas
-        $asistencias_reales = $asistencias + $retardos;
-        $porcentaje_asistencias_reales = ($asistencias_reales / $total_clases) * 100;
+// Generar tabla para porcentaje de asistencias reales con mensaje y color según el porcentaje
+echo '<br><br>';
+echo '<div class="table-responsive" style="width: 50%;">'; // Modificación del estilo para limitar el ancho al 50%
+echo '<table class="table table-bordered">';
+echo '<tbody>';
+if ($porcentaje_asistencias_reales >= 80) {
+    echo '<tr><th>Porcentaje de Asistencias</th><td class="text-success">Con derecho a examen</td></tr>';
+    echo '<tr><th>%</th><td class="text-success">' . round($porcentaje_asistencias_reales, 2) . '%</td></tr>';
+} else {
+    echo '<tr><th>Porcentaje de Asistencias</th><td class="text-danger">Sin derecho a examen</td></tr>';
+    echo '<tr><th>%</th><td class="text-danger">' . round($porcentaje_asistencias_reales, 2) . '%</td></tr>';
+}
+echo '</tbody>';
+echo '</table>';
+echo '</div>';
+echo '<br><br>';
 
-        // Generar tabla para porcentaje de asistencias reales con mensaje y color según el porcentaje
-        echo '<br><br>';
-        echo '<div style="width: 50%;" class="table-responsive">';
-        echo '<table class="table table-bordered">';
-        echo '<tbody>';
-        if ($porcentaje_asistencias_reales >= 80) {
-            echo '<tr><th>Porcentaje de Asistencias</th><td class="text-success">Con derecho a examen</td></tr>';
-            echo '<tr><th>%</th><td class="text-success">' . round($porcentaje_asistencias_reales, 2) . '%</td></tr>';
-        } else {
-            echo '<tr><th>Porcentaje de Asistencias</th><td class="text-danger">Sin derecho a examen</td></tr>';
-            echo '<tr><th>%</th><td class="text-danger">' . round($porcentaje_asistencias_reales, 2) . '%</td></tr>';
-        }
-        echo '</tbody>';
-        echo '</table>';
-        echo '</div>';
+        
 
         echo '<form action="procesar_justificante.php" method="post" enctype="multipart/form-data">';
         echo '<h3>Subir justificante:</h3>';

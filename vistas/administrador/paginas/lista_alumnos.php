@@ -232,31 +232,46 @@ if (isset($_GET['id_materia']) && isset($_GET['id_grupo'])) {
 
                     </div><br><br>';
 
-        echo '<table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Nombre del Alumno</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>';
-
-        // Recorrer los resultados y mostrar cada alumno y su estado en la tabla
-        while ($row_alumno = $query_alumnos->fetch(PDO::FETCH_ASSOC)) {
-            echo '<tr>
-                    <td>' . $row_alumno['nombre_alumno'] . '</td>
-                    <td>
-                        <select name="estado_alumno[' . $row_alumno['id_alumno'] . ']">
-                            <option value="asistio">Asistió</option>
-                            <option value="no_vino">No vino</option>
-                            <option value="retardo">Retardo</option>
-                        </select>
-                    </td>
-                  </tr>';
-        }
-
-        // Fin de la tabla HTML y el formulario
-        echo '</tbody></table>';
+                    echo '<table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Alumno</th>
+                            <th>Estado</th>
+                            <th>Foto</th> <!-- Nueva columna para la foto -->
+                        </tr>
+                    </thead>
+                    <tbody>';
+                
+                while ($row_alumno = $query_alumnos->fetch(PDO::FETCH_ASSOC)) {
+                    // Consulta para obtener la ruta de la foto del alumno
+                    $query_foto = $db->connect()->prepare('SELECT ruta_foto FROM login1 WHERE id = :id_alumno');
+                    $query_foto->execute(array(':id_alumno' => $row_alumno['id_alumno']));
+                    $ruta_foto = $query_foto->fetchColumn(); // Obtiene la ruta de la foto
+                
+                    echo '<tr>
+                        <td>' . $row_alumno['nombre_alumno'] . '</td>
+                        <td>
+                            <select name="estado_alumno[' . $row_alumno['id_alumno'] . ']">
+                                <option value="asistio">Asistió</option>
+                                <option value="no_vino">No vino</option>
+                                <option value="retardo">Retardo</option>
+                            </select>
+                        </td>
+                        <td>';
+                        
+                        $ruta_foto = '../../' . $ruta_foto;
+                        // Muestra la imagen si la ruta existe
+                        if ($ruta_foto && file_exists($ruta_foto)) {
+                            echo '<a href="' . $ruta_foto . '"><img src="' . $ruta_foto . '" alt="Descripción de la imagen" style="max-width: 50px; max-height: 50px;"></a>';
+                        } else {
+                            echo 'No disponible';
+                        }
+                        
+                        echo '</td>
+                    </tr>';
+                }
+                
+                echo '</tbody></table>';
         echo '<input type="submit" value="Guardar Asistencia">';
         echo '</form>';
 
