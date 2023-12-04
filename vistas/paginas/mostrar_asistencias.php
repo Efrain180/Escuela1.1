@@ -48,7 +48,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">                                                                    
+<link rel="stylesheet" href="../css/css_personal.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -96,7 +97,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary1 elevation-4">
       <!-- Brand Logo -->
       <a href="http://www.utmirbis.org/" target="_blank" class="brand-link">
         <img src="../../imagenes/utmir.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -310,16 +311,7 @@ echo '</table>';
 echo '</div>';
 echo '<br><br>';
 
-        
-
-        echo '<form action="procesar_justificante.php" method="post" enctype="multipart/form-data">';
-        echo '<h3>Subir justificante:</h3>';
-        echo '<input type="file" name="justificante" id="justificante" required>';
-        echo '<input type="hidden" name="id_materia" value="' . $id_materia . '">';
-        echo '<input type="hidden" name="id_alumno" value="' . $id_alumno . '">';
-        echo '<input type="submit" value="Subir Justificante" name="submit">';
-        echo '</form>';
-
+ 
     } else {
         echo "No hay registros de asistencias para este alumno en esta materia.";
     }
@@ -329,10 +321,19 @@ echo '<br><br>';
     echo "Falta el ID de materia o el ID de alumno.";
 }
 
+       
+
+        echo '<form action="procesar_justificante.php" method="post" enctype="multipart/form-data">';
+        echo '<h3>Subir justificante:</h3>';
+        echo '<input type="file" name="justificante" id="justificante" required>';
+        echo '<input type="hidden" name="id_materia" value="' . $id_materia . '">';
+        echo '<input type="hidden" name="id_alumno" value="' . $id_alumno . '">';
+        echo '<input type="submit" value="Subir Justificante" name="submit" id="submitBtn">';
+        echo '</form>';
+        
 
 
 ?>
-
 
 
 
@@ -400,10 +401,10 @@ echo '<br><br>';
     <footer class="main-footer">
       <!-- To the right -->
       <div class="float-right d-none d-sm-inline">
-        Anything you want
+        Efrain Garcia Vargas                                         
       </div>
       <!-- Default to the left -->
-      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+<strong>Universidad Tecnologica de Mineral de la Reforma</strong>                                             
     </footer>
   </div>
   <!-- ./wrapper -->

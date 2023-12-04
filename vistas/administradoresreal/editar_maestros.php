@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
                 <h3 class="modal-title" id="exampleModalLabel">Editar Maestros</h3>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                <button type="button" class="btn btn-success"       data-dismiss="modal">
                     <i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
             <div class="modal-body">
@@ -54,7 +54,7 @@
                     <input type="hidden" name="id" value="<?php echo $fila['id']; ?>">
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="editForm(<?php echo $fila['id']; ?>)">Guardar</button>
+                        <button type="button" class="btn btn-success"       onclick="editForm(<?php echo $fila['id']; ?>)">Guardar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
             </form>

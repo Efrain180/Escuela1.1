@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2023 a las 23:06:52
+-- Tiempo de generación: 04-12-2023 a las 09:12:20
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -55,10 +55,31 @@ CREATE TABLE `alumno_clase` (
   `id` int(11) NOT NULL,
   `id_alumno` int(11) NOT NULL,
   `id_materia` int(11) NOT NULL,
-  `id_periodo` int(11) NOT NULL,
   `id_maestro` int(11) NOT NULL,
+  `numero_unidad` int(11) NOT NULL,
   `calificacion` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `alumno_clase`
+--
+
+INSERT INTO `alumno_clase` (`id`, `id_alumno`, `id_materia`, `id_maestro`, `numero_unidad`, `calificacion`) VALUES
+(86, 17, 17, 4, 1, 8.8),
+(87, 18, 17, 4, 1, 9),
+(88, 18, 17, 4, 2, 6.7),
+(90, 27, 17, 4, 1, 8),
+(91, 27, 17, 4, 2, 6),
+(92, 17, 17, 4, 3, 9),
+(101, 21, 17, 4, 1, 9.6),
+(106, 18, 17, 4, 3, 8.5),
+(115, 21, 17, 4, 2, 8.6),
+(117, 21, 17, 4, 3, 9.2),
+(120, 17, 17, 4, 2, 8.6),
+(121, 27, 17, 4, 3, 10),
+(123, 18, 17, 4, 4, 8.3),
+(124, 17, 17, 4, 4, 8.5),
+(125, 15, 22, 10, 1, 9.3);
 
 -- --------------------------------------------------------
 
@@ -79,83 +100,48 @@ CREATE TABLE `asistencias` (
 --
 
 INSERT INTO `asistencias` (`id`, `id_alumno`, `id_materia`, `fecha_asistencia`, `estado`) VALUES
-(155, 17, 17, '2023-11-25', 'asistio'),
-(156, 18, 17, '2023-11-25', 'asistio'),
-(157, 21, 17, '2023-11-25', 'asistio'),
-(158, 27, 17, '2023-11-25', 'asistio'),
-(163, 17, 17, '2023-11-26', 'asistio'),
-(164, 18, 17, '2023-11-26', 'asistio'),
-(165, 21, 17, '2023-11-26', 'asistio'),
-(166, 27, 17, '2023-11-26', 'asistio'),
-(167, 15, 22, '2023-11-20', 'asistio'),
-(168, 22, 22, '2023-11-20', 'asistio'),
-(169, 23, 22, '2023-11-20', 'no_vino'),
-(170, 64, 22, '2023-11-20', 'asistio'),
-(171, 15, 22, '2023-11-21', 'asistio'),
-(172, 22, 22, '2023-11-21', 'asistio'),
-(173, 23, 22, '2023-11-21', 'asistio'),
-(174, 64, 22, '2023-11-21', 'asistio'),
-(175, 15, 22, '2023-11-22', 'asistio'),
-(176, 22, 22, '2023-11-22', 'no_vino'),
-(177, 23, 22, '2023-11-22', 'asistio'),
-(178, 64, 22, '2023-11-22', 'asistio'),
-(179, 15, 22, '2023-11-23', 'asistio'),
-(180, 22, 22, '2023-11-23', 'retardo'),
-(181, 23, 22, '2023-11-23', 'retardo'),
-(182, 64, 22, '2023-11-23', 'asistio'),
-(183, 15, 22, '2023-11-24', 'retardo'),
-(184, 22, 22, '2023-11-24', 'asistio'),
-(185, 23, 22, '2023-11-24', 'asistio'),
-(186, 64, 22, '2023-11-24', 'asistio'),
-(187, 15, 22, '2023-11-25', 'no_vino'),
-(188, 22, 22, '2023-11-25', 'asistio'),
-(189, 23, 22, '2023-11-25', 'asistio'),
-(190, 64, 22, '2023-11-25', 'asistio'),
-(191, 15, 22, '2023-11-26', 'retardo'),
-(192, 22, 22, '2023-11-26', 'asistio'),
-(193, 23, 22, '2023-11-26', 'asistio'),
-(194, 64, 22, '2023-11-26', 'asistio'),
-(251, 17, 21, '2023-11-26', 'no_vino'),
-(252, 18, 21, '2023-11-26', 'asistio'),
-(253, 21, 21, '2023-11-26', 'asistio'),
-(254, 27, 21, '2023-11-26', 'asistio'),
-(255, 15, 22, '2023-11-27', 'retardo'),
-(256, 22, 22, '2023-11-27', 'asistio'),
-(257, 23, 22, '2023-11-27', 'asistio'),
-(258, 64, 22, '2023-11-27', 'asistio'),
-(259, 15, 22, '2023-11-28', 'retardo'),
-(260, 22, 22, '2023-11-28', 'asistio'),
-(261, 23, 22, '2023-11-28', 'asistio'),
-(262, 64, 22, '2023-11-28', 'asistio'),
-(263, 15, 22, '2023-11-29', 'retardo'),
-(264, 22, 22, '2023-11-29', 'asistio'),
-(265, 23, 22, '2023-11-29', 'asistio'),
-(266, 64, 22, '2023-11-29', 'asistio'),
-(267, 17, 17, '2023-11-27', 'retardo'),
-(268, 18, 17, '2023-11-27', 'asistio'),
-(269, 21, 17, '2023-11-27', 'asistio'),
-(270, 27, 17, '2023-11-27', 'asistio'),
-(271, 17, 17, '2023-11-28', 'retardo'),
-(272, 18, 17, '2023-11-28', 'asistio'),
-(273, 21, 17, '2023-11-28', 'asistio'),
-(274, 27, 17, '2023-11-28', 'asistio'),
-(275, 17, 17, '2023-11-29', 'retardo'),
-(276, 18, 17, '2023-11-29', 'asistio'),
-(277, 21, 17, '2023-11-29', 'asistio'),
-(278, 27, 17, '2023-11-29', 'asistio'),
-(279, 15, 22, '2023-11-30', 'retardo'),
-(280, 22, 22, '2023-11-30', 'asistio'),
-(281, 23, 22, '2023-11-30', 'asistio'),
-(282, 64, 22, '2023-11-30', 'asistio'),
-(283, 15, 22, '2023-12-01', 'no_vino'),
-(284, 22, 22, '2023-12-01', 'asistio'),
-(285, 23, 22, '2023-12-01', 'asistio'),
-(286, 64, 22, '2023-12-01', 'asistio'),
-(288, 17, 24, '2023-11-30', 'no_vino'),
-(289, 18, 24, '2023-11-30', 'asistio'),
-(290, 21, 24, '2023-11-30', 'asistio'),
-(291, 27, 24, '2023-11-30', 'retardo'),
-(292, 71, 24, '2023-11-30', 'asistio');
+(298, 15, 17, '2023-11-27', 'retardo'),
+(299, 17, 17, '2023-11-27', 'no_vino'),
+(300, 18, 17, '2023-11-27', 'asistio'),
+(301, 21, 17, '2023-11-27', 'asistio'),
+(302, 22, 17, '2023-11-27', 'asistio'),
+(303, 23, 17, '2023-11-27', 'retardo'),
+(304, 27, 17, '2023-11-27', 'asistio'),
+(305, 15, 17, '2023-11-28', 'asistio'),
+(306, 17, 17, '2023-11-28', 'retardo'),
+(307, 18, 17, '2023-11-28', 'no_vino'),
+(308, 21, 17, '2023-11-28', 'asistio'),
+(309, 22, 17, '2023-11-28', 'asistio'),
+(310, 23, 17, '2023-11-28', 'asistio'),
+(311, 27, 17, '2023-11-28', 'asistio'),
+(312, 15, 17, '2023-11-29', 'asistio'),
+(313, 17, 17, '2023-11-29', 'no_vino'),
+(314, 18, 17, '2023-11-29', 'asistio'),
+(315, 21, 17, '2023-11-29', 'asistio'),
+(316, 22, 17, '2023-11-29', 'asistio'),
+(317, 23, 17, '2023-11-29', 'asistio'),
+(318, 27, 17, '2023-11-29', 'no_vino'),
+(319, 15, 17, '2023-11-30', 'asistio'),
+(320, 17, 17, '2023-11-30', 'asistio'),
+(321, 18, 17, '2023-11-30', 'asistio'),
+(322, 21, 17, '2023-11-30', 'asistio'),
+(323, 22, 17, '2023-11-30', 'asistio'),
+(324, 23, 17, '2023-11-30', 'asistio'),
+(325, 27, 17, '2023-11-30', 'asistio'),
+(326, 15, 17, '2023-12-01', 'retardo'),
+(327, 17, 17, '2023-12-01', 'asistio'),
+(328, 18, 17, '2023-12-01', 'asistio'),
+(329, 21, 17, '2023-12-01', 'asistio'),
+(330, 22, 17, '2023-12-01', 'asistio'),
+(331, 23, 17, '2023-12-01', 'asistio'),
+(332, 27, 17, '2023-12-01', 'asistio'),
+(333, 15, 17, '2023-12-04', 'retardo'),
+(334, 17, 17, '2023-12-04', 'asistio'),
+(335, 18, 17, '2023-12-04', 'asistio'),
+(336, 21, 17, '2023-12-04', 'asistio'),
+(337, 22, 17, '2023-12-04', 'no_vino'),
+(338, 23, 17, '2023-12-04', 'asistio'),
+(339, 27, 17, '2023-12-04', 'asistio');
 
 -- --------------------------------------------------------
 
@@ -207,7 +193,8 @@ CREATE TABLE `grupos` (
 
 INSERT INTO `grupos` (`id`, `nombre`, `id_cuatri`, `fecha`) VALUES
 (7, 'Entornos Virtuales Y Negocios Digitales', 1, '2023-11-17 03:25:40'),
-(8, 'Entornos Virtuales Y Negocios Digitales', 2, '2023-11-17 03:25:54');
+(8, 'Entornos Virtuales Y Negocios Digitales', 2, '2023-11-17 03:25:54'),
+(9, 'Entornos Virtuales Y Negocios Digitales', 4, '2023-12-04 05:51:55');
 
 -- --------------------------------------------------------
 
@@ -230,7 +217,7 @@ CREATE TABLE `justificante` (
 --
 
 INSERT INTO `justificante` (`id`, `id_alumno`, `id_materia`, `archivo_nombre`, `archivo_ruta`, `archivo_drive_id`, `fecha_subida`) VALUES
-(19, 15, 22, 'Borrador Product Backlog.pdf', '../../justificantes/Borrador Product Backlog.pdf', '1KYRuJ4ix44fo_DwfOg2krI14QW_jVgkI', '2023-11-27 20:35:22');
+(87, 17, 17, 'Borrador Product Backlog.pdf', '../../justificantes/Borrador Product Backlog.pdf', '1Py6tANNq8EvU53CVWqHfyWmRri3mmJLA', '2023-12-04 07:11:50');
 
 -- --------------------------------------------------------
 
@@ -256,15 +243,24 @@ CREATE TABLE `login1` (
 --
 
 INSERT INTO `login1` (`id`, `nombrea`, `apellido1`, `apellido2`, `fechana`, `correo`, `contrasena`, `rol_id`, `id_grupo`, `ruta_foto`) VALUES
-(15, 'Uriel ', 'Gonzales', 'Trejo', '2021-11-24', 'a02003819@utmir.edu.mx', '02003819', 2, 8, '../Fotos_alumnos/Pic1.jpeg'),
+(15, 'Uriel ', 'Gonzales', 'Trejo', '2021-11-24', 'a02003819@utmir.edu.mx', '02003819', 2, 7, '../Fotos_alumnos/Pic1.jpeg'),
 (17, 'Luis Jonathan', 'Lopez', 'Garcia', '2021-11-20', 'a02003724@utmir.edu.mx', '02003724', 2, 7, '../Fotos_alumnos/Pic2.jpg'),
 (18, 'Jesus', 'Luna', 'Plata', '2021-11-11', 'a02003730@utmir.edu.mx', '02003730', 2, 7, '../Fotos_alumnos/Pic6.jpg'),
 (21, 'Maria de los angeles', 'Mercado', 'Martinez', '2021-11-09', 'a02003825@utmir.edu.mx', '02003825', 2, 7, '../Fotos_alumnos/Pic3.jpeg'),
-(22, 'Hugo Alejandro', 'Orta ', 'Ruiz', '2021-11-05', 'a02003698@utmir.edu.mx', '02003698', 2, 8, '../Fotos_alumnos/pic12.jpeg'),
-(23, 'Juan Manuel', 'Ortiz', 'Tapia', '2021-11-11', 'a02003800@utmir.edu.mx', '02003800', 2, 8, '../Fotos_alumnos/Pic17.jpeg'),
+(22, 'Hugo Alejandro', 'Orta ', 'Ruiz', '2021-11-05', 'a02003698@utmir.edu.mx', '02003698', 2, 7, '../Fotos_alumnos/pic12.jpeg'),
+(23, 'Juan Manuel', 'Ortiz', 'Tapia', '2021-11-11', 'a02003800@utmir.edu.mx', '02003800', 2, 7, '../Fotos_alumnos/Pic17.jpeg'),
 (27, 'Josafat Gael', 'Rodriguez', 'Martinez', '2021-11-12', 'a02003704@utmir.edu.mx', '02003704', 2, 7, '../Fotos_alumnos/pic18.jpeg'),
-(64, 'Efrain', 'aa', 'Vargas', '2023-11-14', 'garciavargasefrain12@gmail.com', 'aaa', 2, 8, '../Fotos_alumnos/pic19.jpeg'),
-(71, 'Efrain', 'ccccccc', 'Vargas', '2023-11-28', 'garciavargasefrain12@gmail.com', 'cccccccc', 2, 7, '../Fotos_alumnos/pic20.jpeg');
+(72, 'ALEJANDRA', 'AZPEITIA', 'VERA', '2023-12-11', 'a02103151@utmir.edu.mx', '02103151', 2, 8, '../Fotos_alumnos/pic28.jpg'),
+(73, 'ARLETH MICHEL', 'PEÑA', 'CRUZ', '2023-12-04', 'a02103068@utmir.edu.mx', '02103068', 2, 8, '../Fotos_alumnos/pic10.jpg'),
+(74, 'ALEXIS', 'HERNÁNDEZ ', 'PÉREZ', '2023-12-11', '2303367@utmir.edu.mx', '2303367', 2, 8, '../Fotos_alumnos/pic26.jpeg'),
+(75, 'CELSO YAIR', 'IBARRA', ' BASILIO', '2023-12-06', 'a02103052@utmir.edu.mx', '02103052', 2, 8, '../Fotos_alumnos/pic30.jpeg'),
+(76, 'ESTRELLA JEZABEL', 'PEREZ ', 'LOZANO', '2023-12-13', 'a02103145@utmir.edu.mx', '02103145', 2, 8, '../Fotos_alumnos/pic25.jpeg'),
+(77, 'ANA LIZBETH', 'SANCHEZ ', 'HERNANDEZ', '2023-12-05', '2303073@utmir.edu.mx', '2303073', 2, 9, '../Fotos_alumnos/pic15.jpeg'),
+(78, 'BRUNO', 'MARQUEZ ', 'HERNANDEZ', '2023-12-11', '2303348@utmir.edu.mx', '2303348', 2, 9, '../Fotos_alumnos/pic21.jpg'),
+(79, 'CARLOS AXEL', 'ZAZUETA', ' GARNICA', '2023-12-04', '2303032@utmir.edu.mx', '2303032', 2, 9, '../Fotos_alumnos/Pic6.jpg'),
+(80, 'CESAR LUIS', 'GUTIERREZ', ' CHARGOY', '2023-12-12', '2303009@utmir.edu.mx', '2303009', 2, 9, '../Fotos_alumnos/pic26.jpeg'),
+(81, 'CHRISTOPER ALEXANDER', 'BALANDRANO', ' DELGADO', '2023-12-12', '2303174@utmir.edu.mx', '2303174', 2, 9, '../Fotos_alumnos/Pic17.jpeg'),
+(82, 'DORIANY MAYERLY', 'RODRIGUEZ ', 'MEJIA', '2023-12-20', '2303010@utmir.edu.mx', '2303010', 2, 9, '../Fotos_alumnos/Pic4.jpeg');
 
 -- --------------------------------------------------------
 
@@ -291,7 +287,11 @@ INSERT INTO `maestros` (`id`, `nombre`, `apellido1`, `apellido2`, `correo`, `con
 (5, 'Jose Vicente', 'Perez', 'aas', '5@gmail.com', '112355', 1),
 (6, 'Neftali', 'Valencia', 'dnklmnkg', '6@gmail.com', '6', 1),
 (10, 'Efrain', 'Garcia', 'Vargas', 'garciavargasefrain12@gmail.com', 'Efrain123', 1),
-(11, 'Victor Erwin', 'Escalante', 'Lopez', 'Victor@utmir.edu.mx', 'Victor', 1);
+(11, 'Victor Erwin', 'Escalante', 'Lopez', 'Victor@utmir.edu.mx', 'Victor', 1),
+(18, 'ZARETZA', 'PEÑA', 'HHHH', 'zaretza@utmir.edu.mx', 'zaretza', 1),
+(19, 'NITZIA', 'LOAIZA', 'ORTIZ', 'nitzia@utmir.edu.mx', 'nitzia', 1),
+(20, 'EDGAR', 'BUSTOS', 'AAAAA', 'edgar@utmir.edu.mx', 'edgar', 1),
+(21, 'VICTOR', 'HUGO', 'SSS', 'victorhugo@utmir.edu.mx', 'victorhugo', 1);
 
 -- --------------------------------------------------------
 
@@ -314,10 +314,24 @@ CREATE TABLE `materias` (
 --
 
 INSERT INTO `materias` (`id`, `materia`, `id_profesor`, `per_ini`, `per_fin`, `id_grupos`, `fecha`) VALUES
-(17, 'analitica', 4, '2023-11-22', '2023-12-01', 7, '2023-11-24 01:39:35'),
+(17, 'Analitica de datos para negocios digitales', 4, '2023-11-22', '2023-12-01', 7, '2023-11-24 01:39:35'),
 (21, 'Tutorias', 4, '2023-11-05', '2023-11-30', 7, '2023-11-24 15:18:46'),
-(22, 'ingles', 10, '2023-11-05', '2023-11-30', 8, '2023-11-24 20:37:23'),
-(24, 'Gestion de proyectos', 11, '2023-11-30', '2023-11-30', 7, '2023-11-29 14:37:12');
+(22, 'ingles VIII', 18, '2023-11-05', '2023-11-30', 7, '2023-11-24 20:37:23'),
+(24, 'Gestion de proyectos', 11, '2023-11-30', '2023-11-30', 7, '2023-11-29 14:37:12'),
+(25, 'Ciberseguridad aplicada a negocios digitales', 5, '2023-12-05', '2023-12-21', 7, '2023-12-04 06:09:53'),
+(26, 'Matematicas para ingenieria II', 5, '2023-12-11', '2023-12-22', 7, '2023-12-04 06:10:38'),
+(27, 'Direccion de equipos de alto rendimiento ', 19, '2023-12-11', '2023-12-12', 7, '2023-12-04 06:11:22'),
+(28, 'Programacion de videojuegos I', 5, '2023-12-27', '2023-12-15', 8, '2023-12-04 06:16:30'),
+(29, 'Administracion del tiempo ', 21, '2023-12-11', '2023-12-21', 8, '2023-12-04 06:16:58'),
+(30, 'Produccion de efectos visuales ', 19, '2023-12-03', '2023-12-23', 8, '2023-12-04 06:17:29'),
+(31, 'Tutoria', 4, '2023-12-05', '2023-12-14', 8, '2023-12-04 06:17:59'),
+(32, 'Ingles VI', 20, '2023-12-10', '2023-12-14', 8, '2023-12-04 06:18:53'),
+(33, 'Matematicas para ingenieria ', 4, '2023-12-10', '2023-12-15', 8, '2023-12-04 06:19:36'),
+(34, 'Algebra lineal', 11, '2023-12-11', '2023-12-14', 9, '2023-12-04 06:20:52'),
+(35, 'Fundamentos de redes ', 21, '2023-12-10', '2023-12-30', 9, '2023-12-04 06:21:10'),
+(36, 'Ingles I', 20, '2023-12-10', '2023-12-13', 9, '2023-12-04 06:21:42'),
+(37, 'Fundamentos de TI', 4, '2023-12-12', '2023-12-14', 9, '2023-12-04 06:22:02'),
+(38, 'Metodologia de la progrmacion', 5, '2023-12-10', '2023-12-22', 9, '2023-12-04 06:22:28');
 
 -- --------------------------------------------------------
 
@@ -353,16 +367,6 @@ CREATE TABLE `periodo` (
   `fecha_inicio` date NOT NULL DEFAULT current_timestamp(),
   `fecha_final` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `periodo`
---
-
-INSERT INTO `periodo` (`id`, `nombre`, `fecha_inicio`, `fecha_final`) VALUES
-(1, 'Septiembre', '2021-09-01', '2021-09-30'),
-(2, 'Octubre', '2021-10-01', '2021-10-31'),
-(3, 'Noviembre', '2021-11-01', '2021-11-30'),
-(4, 'Final', '2021-12-01', '2021-12-15');
 
 -- --------------------------------------------------------
 
@@ -401,7 +405,6 @@ ALTER TABLE `admini`
 ALTER TABLE `alumno_clase`
   ADD PRIMARY KEY (`id`),
   ADD KEY `alumno` (`id_alumno`),
-  ADD KEY `periodo_clase_ibfk_1` (`id_periodo`),
   ADD KEY `maestros` (`id_maestro`),
   ADD KEY `materia` (`id_materia`);
 
@@ -498,13 +501,13 @@ ALTER TABLE `admini`
 -- AUTO_INCREMENT de la tabla `alumno_clase`
 --
 ALTER TABLE `alumno_clase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=293;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=340;
 
 --
 -- AUTO_INCREMENT de la tabla `cuatrimestre`
@@ -516,31 +519,31 @@ ALTER TABLE `cuatrimestre`
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `justificante`
 --
 ALTER TABLE `justificante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT de la tabla `login1`
 --
 ALTER TABLE `login1`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT de la tabla `maestros`
 --
 ALTER TABLE `maestros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
@@ -552,7 +555,7 @@ ALTER TABLE `pagos`
 -- AUTO_INCREMENT de la tabla `periodo`
 --
 ALTER TABLE `periodo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -576,8 +579,7 @@ ALTER TABLE `admini`
 ALTER TABLE `alumno_clase`
   ADD CONSTRAINT `alumno` FOREIGN KEY (`id_alumno`) REFERENCES `login1` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `maestros` FOREIGN KEY (`id_maestro`) REFERENCES `maestros` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `materia` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `periodo_clase_ibfk_1` FOREIGN KEY (`id_periodo`) REFERENCES `periodo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `materia` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `asistencias`

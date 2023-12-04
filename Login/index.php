@@ -31,7 +31,7 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('../imagenes/fondo_login.jpg');">
+	<div class="container-login100" style="background: url('../imagenes/patio.png') no-repeat center center fixed; background-size: cover;">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form" action="../modelos/ingresar.php" method="POST">
 					<span class="login100-form-title p-b-49">

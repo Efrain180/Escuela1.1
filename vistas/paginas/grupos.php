@@ -46,7 +46,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">                                                                    
+<link rel="stylesheet" href="../css/css_personal.css">
 
 </head>
 
@@ -95,7 +96,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary1 elevation-4">
       <!-- Brand Logo -->
       <a href="http://www.utmirbis.org/" target="_blank" class="brand-link">
         <img src="../../imagenes/utmir.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -245,7 +246,7 @@ if ($query_materias_alumno->rowCount() > 0) {
                 <td>' . $row_materia_alumno['nombre_profesor'] . '</td>
                 <td>' . $row_materia_alumno['nombre_grupo'] . '</td>
                 <td>' . $row_materia_alumno['cuatrimestre'] . '</td>
-                <td><a href="mostrar_calificacion.php?id_materia=' . $row_materia_alumno['id_materia'] . '&id_alumno=' . $id_alumno . '"" class="btn btn-primary">Ver calificacion</a></td>
+                <td><a href="mostrar_calificacion.php?id_materia=' . $row_materia_alumno['id_materia'] . '&id_alumno=' . $id_alumno . '"" class="btn btn-success">Ver calificacion</a></td>
             </tr>';
     }
 
@@ -287,10 +288,10 @@ if ($query_materias_alumno->rowCount() > 0) {
   <footer class="main-footer">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
-      Anything you want
+      Efrain Garcia Vargas                                         
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Universidad Tecnologica de Mineral de la Reforma</strong>        
   </footer>
   </div>
   <!-- ./wrapper -->

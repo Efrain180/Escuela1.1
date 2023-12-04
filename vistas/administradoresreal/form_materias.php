@@ -22,7 +22,8 @@ $queryyy = $bda->connect()->prepare("SELECT * FROM maestros");
 $queryyy->execute(array());
 while ($rowe = $queryyy->fetch(PDO::FETCH_ASSOC)) {
     echo '
-<option value="'.$rowe['id'].'" >'.$rowe['nombre'] .$rowe['apellido1']. $rowe['apellido2']. '</option>
+    <option value="'.$rowe['id'].'">'.$rowe['nombre'].' '.$rowe['apellido1'].' '.$rowe['apellido2'].'</option>
+
 
 
 ';

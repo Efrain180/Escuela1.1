@@ -1,4 +1,4 @@
 /* Estilo para la barra lateral con gradiente vertical de tres colores */
 .main-sidebar.sidebar-dark-primary1 {
-    background: linear-gradient(to bottom, rgb(21, 21, 21) 10%, orangered 75%, yellow);
+    background: linear-gradient(to bottom, rgb(21, 21, 21) 10%, orangered 60%, rgb(51, 111, 22));
 }
