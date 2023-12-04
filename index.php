@@ -46,6 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="vistas/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="vistas/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="vistas/css/css_personal.css">
 
 
 </head>
@@ -96,7 +97,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary1 elevation-4">
       <!-- Brand Logo -->
       <a href="http://www.utmirbis.org/" target="_blank" class="brand-link">
         <img src="imagenes/utmir.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">

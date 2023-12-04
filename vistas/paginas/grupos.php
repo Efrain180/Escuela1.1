@@ -14,17 +14,15 @@ require('../../controladores/conexion.php');
 
 $sesion = $_SESSION['rol'];
 $sesionna = $_SESSION['nombres'];
+$sesionid = $_SESSION['id'];
+$sesiongrupo = $_SESSION['grupo'];
 
 $db = new Database;
 
 
-$query =  $db->connect()->prepare('SELECT * FROM login1 WHERE rol_id = :sesion AND nombrea = :sesionna ');
-$query->execute(array(':sesion' => $sesion, ':sesionna' => $sesionna));
+$query =  $db->connect()->prepare('SELECT * FROM login1 WHERE rol_id = :sesion AND nombrea = :sesionna AND id = :sesionid AND id_grupo = :sesiongrupo');
+$query->execute(array(':sesion'=> $sesion, ':sesionna' => $sesionna, ':sesionid' => $sesionid, ':sesiongrupo' => $sesiongrupo ));
 $row = $query->fetch(PDO::FETCH_ASSOC);
-
-
-
-
 
 
 
@@ -49,7 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-  <link rel="stylesheet" href="../css/stilos.css">
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -202,65 +200,68 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="container-fluid">
 
 
-          <div class="row">
-            <div class="col-md-2 sm-col-4"></div>
-            <div class="col-md-6 sm-col-12">
-              <section>
-                <table class="table table-responsive table-hover" class="pad-basic1" style="margin: 0 auto;">
-                  <tr class="bg-orange">
-                    <th class="pad-basic"> Alumno/Alumna </th>
-                    <th class="pad-basic"> Materia </th>
-                    <th class="pad-basic"> Periodo por mes </th>
-                    <th class="pad-basic"> Calificaciones </th>
-                  </tr>
-                  <?php
+        <div class="card-body">
+                <div class="table-responsive">
+       
+        <?php
+// ... (código anterior)
 
+// Obtener dinámicamente el ID del grupo al que pertenece el alumno
+$id_alumno = $_SESSION['id']; // Suponiendo que el ID del alumno está en la sesión
+$id_grupo = $_SESSION['grupo']; // Suponiendo que el ID del grupo está en la sesión
 
-                  $sesion = $_SESSION['rol'];
-                  $sesionna = $_SESSION['nombres'];
-                  $bd = new Database;
-
-                  $queryy = $bd->connect()->prepare("SELECT login1.nombrea, login1.apellido1, materias.materia, periodo.nombre, alumno_clase.calificacion, login1.rol_id FROM alumno_clase
-INNER JOIN login1 
-ON alumno_clase.id_alumno = login1.id
-INNER JOIN maestros 
-ON alumno_clase.id_maestro = maestros.id
-INNER JOIN materias 
-ON alumno_clase.id_materia = materias.id
-INNER JOIN periodo 
-ON alumno_clase.id_periodo = periodo.id WHERE login1.rol_id = :sesion AND login1.nombrea = :sesionna
-ORDER BY periodo.nombre ASC");
-                  $queryy->execute(array(':sesion' => $sesion, ':sesionna' => $sesionna));
-
-                  while ($rowe = $queryy->fetch(PDO::FETCH_ASSOC)) {
-                    echo '
- <tr>
- <td class="pad-basic" >' . $rowe['nombrea'] . ' ' . $rowe['apellido1'] . '</td>
-<td class="pad-basic" >' . $rowe['materia'] . '</td>
-<td class="pad-basic" >  ' . $rowe['nombre'] . '</td>
-<td class="pad-basic" >' . $rowe['calificacion'] . '</td>
-
-</tr>
-
-
-';
-                  }
-
-                  ?>
+// Consulta para obtener las materias asignadas al alumno en el grupo específico
+$query_materias_alumno = $db->connect()->prepare('
+    SELECT m.materia AS nombre_materia, CONCAT(ma.nombre, " ", ma.apellido1) AS nombre_profesor, g.nombre AS nombre_grupo, c.cuatrimestre, g.id AS id_grupo, m.id AS id_materia
+    FROM materias m
+    INNER JOIN grupos g ON m.id_grupos = g.id
+    INNER JOIN cuatrimestre c ON g.id_cuatri = c.id
+    INNER JOIN maestros ma ON m.id_profesor = ma.id
+    WHERE m.id_grupos = :id_grupo AND m.id_profesor = ma.id
+');
 
 
 
-                </table>
-              </section>
+$query_materias_alumno->execute(array(':id_grupo' => $id_grupo));
+
+// Mostrar las materias en una tabla si se encontraron materias asignadas al alumno en ese grupo
+if ($query_materias_alumno->rowCount() > 0) {
+    echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Nombre de la Materia</th>
+                    <th>Profesor</th>
+                    <th>Grupo</th>
+                    <th>Cuatrimestre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>';
+    
+    // Imprimir las materias encontradas en forma de tabla
+    while ($row_materia_alumno = $query_materias_alumno->fetch(PDO::FETCH_ASSOC)) {
+        echo '<tr>
+                <td>' . $row_materia_alumno['nombre_materia'] . '</td>
+                <td>' . $row_materia_alumno['nombre_profesor'] . '</td>
+                <td>' . $row_materia_alumno['nombre_grupo'] . '</td>
+                <td>' . $row_materia_alumno['cuatrimestre'] . '</td>
+                <td><a href="mostrar_calificacion.php?id_materia=' . $row_materia_alumno['id_materia'] . '&id_alumno=' . $id_alumno . '"" class="btn btn-primary">Ver calificacion</a></td>
+            </tr>';
+    }
+
+    echo '</tbody></table>';
+} else {
+    echo 'No se encontraron materias asignadas al alumno en ese grupo.';
+}
+?>
+
+
+</div>
             </div>
-            <div class="col-md-2 sm-col-4"></div>
-          </div>
 
 
 
 
-
-        </div> <!-- /.row -->
 
       </div>
     </div>

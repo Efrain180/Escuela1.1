@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 if (!isset($_SESSION['rol'])) {
 
     header('location: ../../../Login/index.php');
@@ -199,48 +198,95 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <div class="card-body">
                 <div class="table-responsive">
-                <?php
-$id_maestro = $_SESSION['id'];
+                <button type="button" class="btn btn-success" id="mostrarFormulario">
+                    <span class="glyphicon glyphicon-plus"></span> Agregar Calificacion<i class="fa fa-plus"></i> </a></button>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // Esconder el formulario al principio
+        $("#registro").hide();
 
-// Consulta para obtener las materias asignadas al maestro
-$query_materias = $db->connect()->prepare('SELECT m.materia, g.nombre AS grupo, c.cuatrimestre, g.id AS id_grupo, m.id AS id_materia
-    FROM materias m
-    INNER JOIN grupos g ON m.id_grupos = g.id
-    INNER JOIN cuatrimestre c ON g.id_cuatri = c.id
-    WHERE m.id_profesor = :id_maestro');
-$query_materias->execute(array(':id_maestro' => $id_maestro));
+        // Mostrar el formulario al hacer clic en el botón "Agregar"
+        $("#mostrarFormulario").click(function(){
+            $("#registro").toggle(); // Alternar la visibilidad del formulario
+        });
+    });
+</script>
 
-// Comprobar si se encontraron materias asignadas al maestro
-if ($query_materias->rowCount() > 0) {
-    // Comienzo de la tabla HTML con el mismo estilo que el segundo código
-    echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Materia</th>
-                    <th>Grupo</th>
-                    <th>Cuatrimestre</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>';
+            <?php 
+             include "formulario_cal.php"; ?>
+              </div>
+
+
+
+              
+<?php
+
+$db = new Database;
+
+$id_grupo = $_GET['id_grupo'] ?? null;
+$id_maestro = $_GET['id_maestro'] ?? null;
+
+
+if ($id_grupo !== null) {
+    $query = "SELECT l.nombrea AS 'Nombre del Alumno', ";
     
-    // Recorrer los resultados y mostrar cada materia, grupo y cuatrimestre en la tabla
-    while ($row_materia = $query_materias->fetch(PDO::FETCH_ASSOC)) {
-        echo '<tr>
-                <td>' . $row_materia['materia'] . '</td>
-                <td>' . $row_materia['grupo'] . '</td>
-                <td>' . $row_materia['cuatrimestre'] . '</td>
-                <td><a href="agregar_calificacion.php?id_materia=' . $row_materia['id_materia'] . '&id_grupo=' . $row_materia['id_grupo'] . '&id_maestro=' . $id_maestro . '" class="btn btn-primary"> Agregar calificacion</a></td>
+    // Obtener las unidades disponibles
+    $query_unidades = $db->connect()->prepare("SELECT DISTINCT numero_unidad FROM alumno_clase");
+    $query_unidades->execute();
+    $unidades = $query_unidades->fetchAll(PDO::FETCH_COLUMN);
 
-              </tr>';
-    }
+    $query .= implode(', ', array_map(function($unidad) {
+        return "IFNULL(MAX(CASE WHEN ac.numero_unidad = $unidad THEN ac.calificacion END), 'S/C') AS 'Unidad $unidad'";
+    }, $unidades));
 
-    // Fin de la tabla HTML
-    echo '</tbody></table>';
-} else {
-    echo 'No se encontraron materias asignadas.';
+    // Agregar columna para la calificación final
+    $query .= ", IFNULL(ROUND(AVG(IF(ac.numero_unidad IN (" . implode(', ', $unidades) . "), ac.calificacion, NULL)), 2), 'S/C') AS 'Calificación Final'";
+
+    $query .= " FROM login1 l
+               LEFT JOIN alumno_clase ac ON l.id = ac.id_alumno AND ac.id_materia = :id_materia
+               WHERE l.id_grupo = :id_grupo
+               GROUP BY l.id";
+
+    $stmt = $db->connect()->prepare($query);
+    $stmt->bindValue(':id_materia', $id_materia, PDO::PARAM_INT);
+    $stmt->bindValue(':id_grupo', $id_grupo, PDO::PARAM_INT);
+    $stmt->execute();
 }
 ?>
+
+<!-- ... (código PHP existente) ... -->
+
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Nombre del Alumno</th>
+                <?php foreach ($unidades as $unidad) : ?>
+                    <th>Unidad <?php echo $unidad; ?></th>
+                <?php endforeach; ?>
+                <th>Calificación Final</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
+                <tr>
+                    <td><?php echo $row['Nombre del Alumno']; ?></td>
+                    <?php foreach ($unidades as $unidad) : ?>
+                        <?php $calificacion = $row["Unidad $unidad"] !== 'S/C' ? number_format($row["Unidad $unidad"], 2) : $row["Unidad $unidad"]; ?>
+                        <td><?php echo $calificacion; ?></td>
+                    <?php endforeach; ?>
+                    <?php 
+                        $calif_final = $row['Calificación Final'] !== 'S/C' ? number_format($row['Calificación Final'], 2) : $row['Calificación Final']; 
+                        $color = $calif_final < 8 ? 'red' : 'green'; // Determinar el color
+                    ?>
+                    <td style="color: <?php echo $color; ?>"><?php echo $calif_final; ?></td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+</div>
 
 
 

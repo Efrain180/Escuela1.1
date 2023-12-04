@@ -1,16 +1,13 @@
 <?php
-
-
 session_start();
 
-if(!isset($_SESSION['rol'])){
+if (!isset($_SESSION['rol'])) {
 
+  header('location: ../../Login/index.php');
+} else {
+  if ($_SESSION['rol'] != 2) {
     header('location: ../../Login/index.php');
-    
-}else{
-    if($_SESSION['rol']!=2){
-        header('location: ../../Login/index.php');
-    }
+  }
 }
 
 require('../../controladores/conexion.php');
@@ -30,6 +27,7 @@ $row = $query->fetch(PDO::FETCH_ASSOC);
 
 
 
+
 ?>
 <!DOCTYPE html>
 <!--
@@ -41,7 +39,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UTMIR | Pago </title>
+  <title>UTMIR | Calificaciones</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -49,6 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../css/stilos.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -111,7 +110,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <img src="../../imagenes/Efrain.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="perfil.php" class="d-block"><?php  print('EST. '.$row['nombrea'].' '.$row['apellido1']) ?></a>
+            <a href="perfil.php"  class="d-block"><?php print('EST. ' . $row['nombrea'] . ' ' . $row['apellido1']) ?></a>
           </div>
         </div>
 
@@ -134,7 +133,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
             <li class="nav-item">
-              <a href="grupos.php" class="nav-link">
+              <a href="#" class="nav-link">
                <i class="nav-icon fas fa-copy"></i>
                 <p>
                   Calificaciones
@@ -143,7 +142,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="clases.php" class="nav-link">
                <i class="nav-icon fas fa-copy"></i>
                 <p>
                   Clases
@@ -160,7 +159,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="pago.php" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
                   Pagos
@@ -181,130 +180,141 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="col-md-12">
         <div class="card card-green">
           <div class="card-header">
-            <h3 class="card-title" class="text-center"> Informacion</h3>
+            <h3 class="card-title" class="text-center"> Calificaciones</h3>
           </div>
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
       </div>
-      <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
           <div class="row ">
             <div class="col-md-12">
-              <h1 class="text-center">CLASES</h1>
+              <h1 class="text-center">CALIFICACIONES </h1>
             </div>
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+          </div>
+        </div>
       </div>
-
+      <!-- /.content-header -->
       <div class="content">
         <div class="container-fluid">
 
-        
-        <div class="container">
-        <div class="card">
-    </div>
 
-    <div class="card-body">
-                <div class="table-responsive">
-       
+        <div class="card-body">
+    <div class="table-responsive">
         <?php
-// ... (código anterior)
+        $db = new Database;
 
-// Obtener dinámicamente el ID del grupo al que pertenece el alumno
-$id_alumno = $_SESSION['id']; // Suponiendo que el ID del alumno está en la sesión
-$id_grupo = $_SESSION['grupo']; // Suponiendo que el ID del grupo está en la sesión
+        $id_alumno = $_GET['id_alumno'] ?? null;
+        
+        $id_materia = $_GET['id_materia'] ?? null;
 
-// Consulta para obtener las materias asignadas al alumno en el grupo específico
-$query_materias_alumno = $db->connect()->prepare('
-    SELECT m.materia AS nombre_materia, CONCAT(ma.nombre, " ", ma.apellido1) AS nombre_profesor, g.nombre AS nombre_grupo, c.cuatrimestre, g.id AS id_grupo, m.id AS id_materia
-    FROM materias m
-    INNER JOIN grupos g ON m.id_grupos = g.id
-    INNER JOIN cuatrimestre c ON g.id_cuatri = c.id
-    INNER JOIN maestros ma ON m.id_profesor = ma.id
-    WHERE m.id_grupos = :id_grupo AND m.id_profesor = ma.id
-');
+        $unidades = []; // Inicializar $unidades como un array vacío
+        $stmt = null; // Inicializar $stmt como null
 
+        if ($id_alumno !== null) {
+            $query = "SELECT l.nombrea AS 'Nombre del Alumno', ";
+            
+            // Obtener las unidades disponibles
+            $query_unidades = $db->connect()->prepare("SELECT DISTINCT numero_unidad FROM alumno_clase");
+            $query_unidades->execute();
+            $unidades = $query_unidades->fetchAll(PDO::FETCH_COLUMN);
 
+            if ($unidades) { // Verificar si se obtuvieron resultados
+                $query .= implode(', ', array_map(function ($unidad) {
+                    return "IFNULL(MAX(CASE WHEN ac.numero_unidad = $unidad THEN ac.calificacion END), 'S/C') AS 'Unidad $unidad'";
+                }, $unidades));
 
-$query_materias_alumno->execute(array(':id_grupo' => $id_grupo));
+                // Agregar columna para la calificación final
+                $query .= ", IFNULL(ROUND(AVG(IF(ac.numero_unidad IN (" . implode(', ', $unidades) . "), ac.calificacion, NULL)), 2), 'S/C') AS 'Calificación Final'";
 
-// Mostrar las materias en una tabla si se encontraron materias asignadas al alumno en ese grupo
-if ($query_materias_alumno->rowCount() > 0) {
-    echo '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Nombre de la Materia</th>
-                    <th>Profesor</th>
-                    <th>Grupo</th>
-                    <th>Cuatrimestre</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>';
-    
-    // Imprimir las materias encontradas en forma de tabla
-    while ($row_materia_alumno = $query_materias_alumno->fetch(PDO::FETCH_ASSOC)) {
-        echo '<tr>
-                <td>' . $row_materia_alumno['nombre_materia'] . '</td>
-                <td>' . $row_materia_alumno['nombre_profesor'] . '</td>
-                <td>' . $row_materia_alumno['nombre_grupo'] . '</td>
-                <td>' . $row_materia_alumno['cuatrimestre'] . '</td>
-                <td><a href="mostrar_asistencias.php?id_materia=' . $row_materia_alumno['id_materia'] . '&id_alumno=' . $id_alumno . '"" class="btn btn-primary">Ver asistencias</a></td>
-            </tr>';
-    }
+                $query .= " FROM login1 l
+                           LEFT JOIN alumno_clase ac ON l.id = ac.id_alumno AND ac.id_materia = :id_materia
+                           WHERE l.id = :id_alumno"; // Filtrar por id_alumno
+                           
+                $stmt = $db->connect()->prepare($query);
+                $stmt->bindValue(':id_materia', $id_materia, PDO::PARAM_INT);
+                $stmt->bindValue(':id_alumno', $id_alumno, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+        }
+        ?>
 
-    echo '</tbody></table>';
-} else {
-    echo 'No se encontraron materias asignadas al alumno en ese grupo.';
-}
-?>
+        <!-- ... (código HTML existente) ... -->
 
-
-</div>
-            </div>
-
-
-
-</div>
-            </div>
-
-
-
-            <!-- /.col -->
-          </div> <!-- /.row -->
-
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Nombre del Alumno</th>
+                        <?php foreach ($unidades as $unidad) : ?>
+                            <th>Unidad <?php echo $unidad; ?></th>
+                        <?php endforeach; ?>
+                        <th>Calificación Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($stmt) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
+                    ?>
+                            <tr>
+                                <td><?php echo $row['Nombre del Alumno']; ?></td>
+                                <?php foreach ($unidades as $unidad) : ?>
+                                    <?php $calificacion = $row["Unidad $unidad"] !== 'S/C' ? number_format($row["Unidad $unidad"], 2) : $row["Unidad $unidad"]; ?>
+                                    <td><?php echo $calificacion; ?></td>
+                                <?php endforeach; ?>
+                                <?php
+                                $calif_final = $row['Calificación Final'] !== 'S/C' ? number_format($row['Calificación Final'], 2) : $row['Calificación Final'];
+                                $color = $calif_final < 8 ? 'red' : 'green'; // Determinar el color
+                                ?>
+                                <td style="color: <?php echo $color; ?>"><?php echo $calif_final; ?></td>
+                            </tr>
+                    <?php
+                        endwhile;
+                    } else {
+                        echo "<tr><td colspan='" . (count($unidades) + 1) . "'>No se encontraron calificaciones para este alumno.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
-      </div>
-
-      <!-- /.content-header -->
-
-      <!-- Main content -->
-
-      <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+</div>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-      <div class="p-3">
-        <h5>Title</h5>
-        <p>Sidebar content</p>
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
 
-    <!-- Main Footer -->
-    <footer class="main-footer">
-      <!-- To the right -->
-      <div class="float-right d-none d-sm-inline">
-        Anything you want
+
+
+
       </div>
-      <!-- Default to the left -->
-      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-    </footer>
+    </div>
+
+
+    <!-- Main content -->
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
   </div>
   <!-- ./wrapper -->
 
